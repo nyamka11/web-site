@@ -1,6 +1,10 @@
 
     import  React, { useState  } from 'react';
     import './CSS/todo.css'
+    import axios from 'axios';
+    import ReactNotification from 'react-notifications-component'
+    import 'react-notifications-component/dist/theme.css'
+    import { store } from 'react-notifications-component';
 
     function CompanyRegister()  {
         const [companyName, setCompayName] = useState("");
@@ -10,7 +14,15 @@
         const [guarantorPhoneNumber, setGuarantorPhoneNumber] = useState("");
         const [cellPhone, setCellPhone] = useState("");
         const [email, setEmail] = useState("");
+        const basicURL = "http://ec2-107-23-240-208.compute-1.amazonaws.com/api/";
 
+        const sendData = (url, data, onSuccess) => {
+            const proxyurl = "https://cors-anywhere.herokuapp.com/";
+            axios.post(proxyurl+basicURL+url, data)
+            .then(response => {
+               onSuccess(response);
+           });
+        }
 
         const companyNameHandler = (event) => {
             setCompayName(event.target.value);
@@ -35,6 +47,7 @@
         }
 
         const handleSubmit = (event) => {
+            event.preventDefault()
             setCompayName("");
             setGuarantorName("");
             setPostCode("");
@@ -44,7 +57,7 @@
             setEmail("");
 
             let data = {
-                companyname: companyName,
+                compnayname: companyName,
                 guarantorname: guarantorName,
                 postcode: postCode,
                 address: address,
@@ -52,55 +65,48 @@
                 cellphone: cellPhone,
                 email: email
             };
-            event.preventDefault()
 
-            // fetch('http://ec2-107-23-240-208.compute-1.amazonaws.com/api/company.php', {
-            //     method: 'POST',
-            //     mode: 'cors',
-            //     headers:{
-            //
-            //         "Access-Control-Allow-Origin": "*",
-            //         "Access-Control-Allow-Headers": "Origin, X-Requested-With, Content-Type, Accept",
-            //         'Content-type':'application/json',
-            //     },
-            //     body:"" //JSON.stringify(data)
-            // }).then(res => res.json()).then(result=>{
-            //     console.log(result);
-            // })
+            console.log(data);
+            let data1 = "&compnayname="+ companyName + "&guarantorname="+ guarantorName + "&postcode="+ postCode +
+            "&address="+ address + "&guarantorphonenumber="+ guarantorPhoneNumber +
+            "&cellphone="+ cellPhone + "&email="+ email;
 
-            let headers = new Headers({
-                'Access-Control-Allow-Origin': '*',
-                'Content-Type': 'multipart/form-data',
-                'Access-Control-Allow-Methods': 'GET, POST, OPTIONS',
-                'Access-Control-Allow-Headers': 'Origin, X-Requested-With, Content-Type, Accept',
-                'Content-type': 'application/x-www-form-urlencoded'
-            });
+            sendData("company.php",data1, function(response)  {
+                console.log(response.data.message);
 
-            let sentData = {
-                method: 'POST',
-                mode: 'cors',
-                headers: headers,
-                body: JSON.stringify(data)
-            };
 
-            return new Promise((reslove, reject) => {
-                fetch('http://ec2-107-23-240-208.compute-1.amazonaws.com/api/company.php', sentData)
-                    .then(response => response.json())
-                    .then(responseText => {
-                        let resp = typeof responseText === 'string' ? JSON.parse(responseText) : responseText;
-                        console.log(resp);
-                        reslove(resp); //这个resp会被外部接收
-                    }).catch(err => {
-                        console.log(err);
-                        reject(err);
-                    });
-            }).catch(err => {
-                console.log('出错了');
+                let notify = {}
+                if(response.data.status == false)  {
+                    notify.type = "warning"
+                    notify.title = "Warning!";
+                    notify.message = response.data.message;
+                }
+                else if(response.data.status == true)  {
+                    notify.type = "success"
+                    notify.title = "Success!";
+                    notify.message = response.data.message;
+                }
+
+                store.addNotification({
+                    title: notify.title,
+                    message: response.data.message,
+                    type: notify.type, //"success",
+                    insert: "top",
+                    container: "top-right",
+                    animationIn: ["animated", "fadeIn"],
+                    animationOut: ["animated", "fadeOut"],
+                    dismiss: {
+                        duration: 5000,
+                        onScreen: true
+                    }
+                });
+
             });
         }
 
         return  (
             <div>
+                <ReactNotification />
                 <form onSubmit={handleSubmit}>
                     <h1>Registration</h1>
                     <table >
@@ -124,6 +130,7 @@
                     <input className="submit" type="submit" value="Submit" />
                 </form>
             </div>
+
         )
     }
     //
