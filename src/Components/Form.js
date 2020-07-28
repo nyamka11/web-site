@@ -57,7 +57,7 @@
             setEmail("");
 
             let data = {
-                compnayname: companyName,
+                companyname: companyName,
                 guarantorname: guarantorName,
                 postcode: postCode,
                 address: address,
@@ -67,13 +67,10 @@
             };
 
             console.log(data);
-            let data1 = "&compnayname="+ companyName + "&guarantorname="+ guarantorName + "&postcode="+ postCode +
-            "&address="+ address + "&guarantorphonenumber="+ guarantorPhoneNumber +
-            "&cellphone="+ cellPhone + "&email="+ email;
 
-            sendData("company.php",data1, function(response)  {
+
+            sendData("company.php", JSON.stringify(data), function(response)  {
                 console.log(response.data.message);
-
 
                 let notify = {}
                 if(response.data.status == false)  {
