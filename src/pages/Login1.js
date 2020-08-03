@@ -1,6 +1,6 @@
 
 import  React, { useState  } from 'react';
-import { Link } from 'react-router-dom'
+import { Link, Redirect } from 'react-router-dom'
 import {CButton, CCard, CCardBody, CCardGroup, CCol, CContainer,
   CForm, CInput, CInputGroup, CInputGroupPrepend, CInputGroupText, CRow
 } from '@coreui/react';
@@ -11,9 +11,11 @@ import { store } from 'react-notifications-component';
 
 const Login = () => {
   const basicURL = "http://ec2-107-23-240-208.compute-1.amazonaws.com/api/";
-  const [email, setEmail] = useState("");
+  const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
-
+  const [loggedIn, setLoggedIn] = useState(false);
+  const [statusMsg, setStatusMg] = useState(null);
+  
   const sendData = (url, data, onSuccess) => {
     const proxyurl = "https://cors-anywhere.herokuapp.com/";
     axios.post(proxyurl+basicURL+url, data)
@@ -22,8 +24,8 @@ const Login = () => {
     });
   }
 
-  const emailOrUserNameHandler = (event) => {
-    setEmail(event.target.value);
+  const userNameHandler = (event) => {
+    setUsername(event.target.value);
   }
 
   const passwordHandler = (event) => {
@@ -32,11 +34,40 @@ const Login = () => {
 
   const handleSubmit = (event) => {
     event.preventDefault();
-    // setEmail("");
-    // setPassword("");
-    console.log(email, password)
+
+    sendData("User/login.php","&username="+username+"&password="+password, function(res)  {
+      setStatusMg(res.data.message);
+      if(res.data.status)  {
+        setLoggedIn(true);
+        localStorage.setItem("token", "asdfasdfasdf");
+      }
+      else {
+        let title = res.data.status ? "Success" : "Error";
+        let type = res.data.status ? "success" : "success";
+        let msg = res.data.message;
+
+        store.addNotification({
+          title: title,
+          message: msg,
+          type: type,
+          insert: "top",
+          container: "top-right",
+          animationIn: ["animated", "fadeIn"],
+          animationOut: ["animated", "fadeOut"],
+          dismiss: {
+            duration: 5000,
+            onScreen: true
+          }
+        });
+      }
+    });
   }
-  return (
+
+  console.log("logged: "+loggedIn);
+  if(loggedIn)  {
+    return <Redirect to="/admin" />
+  }
+  else return (
     <div className="c-app c-default-layout flex-row align-items-center">
       <CContainer>
         <CRow className="justify-content-center">
@@ -47,13 +78,14 @@ const Login = () => {
                   <CForm>
                     <h1>Login</h1>
                     <p className="text-muted">Sign In to your account</p>
+                    <p className="text-muted"><font color="red">{statusMsg}</font></p>
                     <CInputGroup className="mb-3">
                       <CInputGroupPrepend>
                         <CInputGroupText>
                           <CIcon name="cil-user" />
                         </CInputGroupText>
                       </CInputGroupPrepend>
-                      <CInput type="text" placeholder="Username or email" autoComplete="username" onChange={emailOrUserNameHandler} />
+                      <CInput type="text" placeholder="Username" name="username" autoComplete="username" value={username} onChange={userNameHandler} />
                     </CInputGroup>
                     <CInputGroup className="mb-4">
                       <CInputGroupPrepend>
@@ -61,7 +93,7 @@ const Login = () => {
                           <CIcon name="cil-lock-locked" />
                         </CInputGroupText>
                       </CInputGroupPrepend>
-                      <CInput type="password" placeholder="Password" autoComplete="current-password" onChange={passwordHandler} />
+                      <CInput type="password" placeholder="Password" name="password" autoComplete="current-password" value={password} onChange={passwordHandler} />
                     </CInputGroup>
                     <CRow>
                       <CCol xs="6">
@@ -92,62 +124,4 @@ const Login = () => {
     </div>
   )
 }
-
 export default Login
-     
-    
-    // import  React, { useState  } from 'react';
-    // import './Components/CSS/todo.css'
-    // import axios from 'axios';
-    // import ReactNotification from 'react-notifications-component'
-    // import 'react-notifications-component/dist/theme.css'
-    // import { store } from 'react-notifications-component';
-
-
-    // function Login()  {
-    //     const basicURL = "http://ec2-107-23-240-208.compute-1.amazonaws.com/api/";
-    //     const [email, setEmail] = useState("");
-    //     const [password, setPassword] = useState("");
-
-    //     const sendData = (url, data, onSuccess) => {
-    //         const proxyurl = "https://cors-anywhere.herokuapp.com/";
-    //         axios.post(proxyurl+basicURL+url, data)
-    //         .then(response => {
-    //         onSuccess(response);
-    //     });
-    //     }
-
-    //     const emailOrUserNameHandler = (event) => {
-    //         setEmail(event.target.value);
-    //     }
-
-    //     const passwordHandler = (event) => {
-    //         setPassword(event.target.value);
-    //     }
-
-    //     const handleSubmit = (event) => {
-    //         event.preventDefault();
-    //         // setEmail("");
-    //         // setPassword("");
-    //     }
-
-    //     return (
-    //         <div>
-    //             <ReactNotification />
-    //             <form onSubmit={handleSubmit}>
-    //                 <h1>Login</h1>
-    //                 <table >
-    //                     <tbody>
-    //                     <tr><td><label>Email :</label></td>
-    //                         <td><input type="text" value={email} onChange={emailOrUserNameHandler} placeholder="User name..." /></td></tr>
-    //                     <tr><td><label>Password :</label></td>
-    //                         <td><input type="password" value={password} onChange={passwordHandler} placeholder="Password..." /></td></tr>
-    //                     </tbody>
-    //                 </table><br/>
-    //                 <input className="submit" type="submit" value="Login" />
-    //             </form>
-    //         </div>
-    //     )
-    // }
-
-    // export default Login;

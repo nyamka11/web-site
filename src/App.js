@@ -1,17 +1,20 @@
 
     import React from 'react';
-    // import './App.css';
-    import Register from './Register';
-    import Login from './Login';
-    import {Route, Link } from "react-router-dom";
-
+    import {Route, Switch ,Link } from "react-router-dom";
+    import Register from './pages/Register';
+    import Login from './pages/Login';
+    import Logout from './pages/Logout';
+    import Admin from './pages/Admin';
+    
     function App() {
+      
       return (
-        <div className="App">
+          <Switch>
             <Route exact path="/" component={ Login } />
-            <Route exact path="/login" component={ Login } />
+            <Route exact path="/logout" component={ Logout } />
+            <Route exact path="/admin" component={ Admin } />
             <Route exact path="/register" component={ Register } />
-        </div>
+          </Switch>
       );
     }
 

@@ -51,14 +51,6 @@
 
         const handleSubmit = (event) => {
             event.preventDefault()
-            setCompayName("");
-            setGuarantorName("");
-            setPostCode("");
-            setAddress("");
-            setGuarantorPhoneNumber("");
-            setCellPhone("");
-            setEmail("");
-
             let data = {
                 companyname: companyName,
                 guarantorname: guarantorName,
@@ -84,6 +76,14 @@
                     notify.type = "success"
                     notify.title = "Success!";
                     notify.message = response.data.message;
+
+                    setCompayName("");
+                    setGuarantorName("");
+                    setPostCode("");
+                    setAddress("");
+                    setGuarantorPhoneNumber("");
+                    setCellPhone("");
+                    setEmail("");
                 }
 
                 store.addNotification({
@@ -105,95 +105,95 @@
 
         return (
             <div className="c-app c-default-layout flex-row align-items-center">
-            <ReactNotification />
-            <CContainer>
-                <CRow className="justify-content-center">
-                <CCol md="9" lg="7" xl="6">
-                    <CCard className="mx-4">
-                    <CCardBody className="p-4">
-                        <CForm>
-                        <h1>Register</h1>
-                        <p className="text-muted">Create your account</p>
-                        <CInputGroup className="mb-3">
-                            <CInputGroupPrepend>
-                            <CInputGroupText>
-                                <CIcon name="cil-user" />
-                            </CInputGroupText>
-                            </CInputGroupPrepend>
-                            <CInput type="text" placeholder="Company name" autoComplete="Companyname" onChange={companyNameHandler} />
-                        </CInputGroup>
+                <ReactNotification />
+                <CContainer>
+                    <CRow className="justify-content-center">
+                    <CCol md="9" lg="7" xl="6">
+                        <CCard className="mx-4">
+                        <CCardBody className="p-4">
+                            <CForm>
+                            <h1>Register</h1>
+                            <p className="text-muted">Create your account</p>
+                            <CInputGroup className="mb-3">
+                                <CInputGroupPrepend>
+                                <CInputGroupText>
+                                    <CIcon name="cil-user" />
+                                </CInputGroupText>
+                                </CInputGroupPrepend>
+                                <CInput type="text" placeholder="Company name" name="asdf" defaultValue={ setCompayName } autoComplete="Companyname" onChange={companyNameHandler} />
+                            </CInputGroup>
 
-                        <CInputGroup className="mb-3">
-                            <CInputGroupPrepend>
-                            <CInputGroupText>
-                                <CIcon name="cil-user" />
-                            </CInputGroupText>
-                            </CInputGroupPrepend>
-                            <CInput type="text" placeholder="Guarantor name" autoComplete="Guarantorname" onChange={guarantorNameHandler} />
-                        </CInputGroup>
+                            <CInputGroup className="mb-3">
+                                <CInputGroupPrepend>
+                                <CInputGroupText>
+                                    <CIcon name="cil-user" />
+                                </CInputGroupText>
+                                </CInputGroupPrepend>
+                                <CInput type="text" placeholder="Guarantor name" defaultValue={ setGuarantorName } autoComplete="Guarantorname" onChange={guarantorNameHandler} />
+                            </CInputGroup>
 
-                        <CInputGroup className="mb-3">
-                            <CInputGroupPrepend>
-                            <CInputGroupText>
-                                <CIcon name="cil-user" />
-                            </CInputGroupText>
-                            </CInputGroupPrepend>
-                            <CInput type="text" placeholder="Post code" autoComplete="Postcode" onChange={postCodeHandler} />
-                        </CInputGroup>
+                            <CInputGroup className="mb-3">
+                                <CInputGroupPrepend>
+                                <CInputGroupText>
+                                    <CIcon name="cil-user" />
+                                </CInputGroupText>
+                                </CInputGroupPrepend>
+                                <CInput type="text" placeholder="Post code" defaultValue={ setPostCode } autoComplete="Postcode" onChange={postCodeHandler} />
+                            </CInputGroup>
 
-                        <CInputGroup className="mb-3">
-                            <CInputGroupPrepend>
-                            <CInputGroupText>
-                                <CIcon name="cil-user" />
-                            </CInputGroupText>
-                            </CInputGroupPrepend>
-                            <CInput type="text" placeholder="Address" autoComplete="Address" onChange={addressHandler} />
-                        </CInputGroup>
+                            <CInputGroup className="mb-3">
+                                <CInputGroupPrepend>
+                                <CInputGroupText>
+                                    <CIcon name="cil-user" />
+                                </CInputGroupText>
+                                </CInputGroupPrepend>
+                                <CInput type="text" placeholder="Address" defaultValue={ setAddress } autoComplete="Address" onChange={addressHandler} />
+                            </CInputGroup>
 
-                        <CInputGroup className="mb-3">
-                            <CInputGroupPrepend>
-                            <CInputGroupText>
-                                <CIcon name="cil-user" />
-                            </CInputGroupText>
-                            </CInputGroupPrepend>
-                            <CInput type="text" placeholder="Guarantor phone" autoComplete="Guarantorphone" onChange={guarantorPhoneHandler} />
-                        </CInputGroup>
+                            <CInputGroup className="mb-3">
+                                <CInputGroupPrepend>
+                                <CInputGroupText>
+                                    <CIcon name="cil-user" />
+                                </CInputGroupText>
+                                </CInputGroupPrepend>
+                                <CInput type="text" placeholder="Guarantor phone" defaultValue={ setGuarantorPhoneNumber } autoComplete="Guarantorphone" onChange={guarantorPhoneHandler} />
+                            </CInputGroup>
 
-                        <CInputGroup className="mb-3">
-                            <CInputGroupPrepend>
-                            <CInputGroupText>
-                                <CIcon name="cil-user" />
-                            </CInputGroupText>
-                            </CInputGroupPrepend>
-                            <CInput type="text" placeholder="Cell phone" autoComplete="Cellphone" onChange={cellPhoneHandler} />
-                        </CInputGroup>
+                            <CInputGroup className="mb-3">
+                                <CInputGroupPrepend>
+                                <CInputGroupText>
+                                    <CIcon name="cil-user" />
+                                </CInputGroupText>
+                                </CInputGroupPrepend>
+                                <CInput type="text" placeholder="Cell phone" defaultValue={ setCellPhone } autoComplete="Cellphone" onChange={cellPhoneHandler} />
+                            </CInputGroup>
 
-                        <CInputGroup className="mb-3">
-                            <CInputGroupPrepend>
-                            <CInputGroupText>
-                                @
-                            </CInputGroupText>
-                            </CInputGroupPrepend>
-                            <CInput type="text" placeholder="Email" autoComplete="Email" onChange={emailHandler} />
-                        </CInputGroup>
-                        
-                        <CButton color="success" block onClick={handleSubmit}>Create Account</CButton>
-                        </CForm>
-                    </CCardBody>
-                    <CCardFooter className="p-4">
-                        <CRow>
-                        <CCol xs="12" sm="6">
-                            <CButton className="btn-facebook mb-1" block><span>facebook</span></CButton>
-                        </CCol>
-                        <CCol xs="12" sm="6">
-                            <CButton className="btn-twitter mb-1" block><span>twitter</span></CButton>
-                        </CCol>
-                        </CRow>
-                    </CCardFooter>
-                    </CCard>
-                </CCol>
-                </CRow>
-            </CContainer>
+                            <CInputGroup className="mb-3">
+                                <CInputGroupPrepend>
+                                <CInputGroupText>
+                                    @
+                                </CInputGroupText>
+                                </CInputGroupPrepend>
+                                <CInput type="text" placeholder="Email" defaultValue={ setEmail } autoComplete="Email" onChange={emailHandler} />
+                            </CInputGroup>
+                            
+                            <CButton color="success" block onClick={handleSubmit}>Create Account</CButton>
+                            </CForm>
+                        </CCardBody>
+                        <CCardFooter className="p-4">
+                            <CRow>
+                            <CCol xs="12" sm="6">
+                                {/* <CButton className="btn-facebook mb-1" block><span>facebook</span></CButton> */}
+                            </CCol>
+                            <CCol xs="12" sm="6">
+                                {/* <CButton className="btn-twitter mb-1" block><span>twitter</span></CButton> */}
+                            </CCol>
+                            </CRow>
+                        </CCardFooter>
+                        </CCard>
+                    </CCol>
+                    </CRow>
+                </CContainer>
             </div>
         )
     }
