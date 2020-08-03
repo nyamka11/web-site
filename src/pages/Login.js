@@ -26,11 +26,19 @@ const Login = () => {
     const [statusMsg, setStatusMsg] = useState(null);
     const [isLoading, setLoading] = useState(false);
 
-    // useEffect(() => {
-    //     if (isLoading) {
-    //         setLoading(false);
-    //     }
-    // }, [isLoading]);
+
+    useEffect(() => {
+        const listener = event => {
+          if (event.code === "Enter" || event.code === "NumpadEnter") {
+            console.log("Enter key was pressed. Run your function.");
+            handleSubmit(event);
+          }
+        };
+        document.addEventListener("keydown", listener);
+        return () => {
+            document.removeEventListener("keydown", listener);
+        };
+    }, []);
 
     const sendData = (url, data, onSuccess) => {
         const proxyurl = "https://cors-anywhere.herokuapp.com/";
