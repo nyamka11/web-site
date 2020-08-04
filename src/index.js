@@ -4,11 +4,11 @@ import App from './App';
 import * as serviceWorker from './serviceWorker';
 import { BrowserRouter } from "react-router-dom";
 import "../node_modules/@coreui/coreui/dist/css/coreui.min.css";
-// import "../node_modules/@coreui/coreui/dist/js/coreui.bundle.min.js";
+import 'bootstrap/dist/css/bootstrap.min.css';
 
 ReactDOM.render(
     <BrowserRouter>
-        <App/>
+        <App/>        
     </BrowserRouter>
 , document.getElementById('root'));
 

@@ -7,14 +7,13 @@
     import Admin from './pages/Admin';
     
     function App() {
-      
       return (
-          <Switch>
-            <Route exact path="/" component={ Login } />
-            <Route exact path="/logout" component={ Logout } />
-            <Route exact path="/admin" component={ Admin } />
-            <Route exact path="/register" component={ Register } />
-          </Switch>
+        <Switch>
+          <Route exact path="/" component={ Login } />
+          <Route exact path="/logout" component={ Logout } />
+          <Route exact path="/admin" component={ Admin } />
+          <Route exact path="/register" component={ Register } />
+        </Switch>
       );
     }
 

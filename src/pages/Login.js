@@ -17,6 +17,7 @@ import {
 import CIcon from "@coreui/icons-react";
 import axios from "axios";
 import "react-notifications-component/dist/theme.css";
+// import { useFetch } from "../useFetch";
 
 const Login = () => {
     const basicURL = "http://ec2-107-23-240-208.compute-1.amazonaws.com/api/";
@@ -26,19 +27,19 @@ const Login = () => {
     const [statusMsg, setStatusMsg] = useState(null);
     const [isLoading, setLoading] = useState(false);
 
-
     useEffect(() => {
         const listener = event => {
-          if (event.code === "Enter" || event.code === "NumpadEnter") {
-            console.log("Enter key was pressed. Run your function.");
-            handleSubmit(event);
-          }
+            if (event.code === "Enter" || event.code === "NumpadEnter") {
+                console.log("Enter key was pressed. Run your function.");
+                handleSubmit(event);
+            }
         };
+
         document.addEventListener("keydown", listener);
         return () => {
             document.removeEventListener("keydown", listener);
         };
-    }, []);
+    }, [isLoading]);
 
     const sendData = (url, data, onSuccess) => {
         const proxyurl = "https://cors-anywhere.herokuapp.com/";
@@ -79,6 +80,7 @@ const Login = () => {
     };
 
     console.log("logged: " + loggedIn);
+
     if (loggedIn)  {
         return <Redirect to="/admin" />;
     } 
@@ -89,54 +91,56 @@ const Login = () => {
                     <CRow className="justify-content-center">
                         <CCol md="8">
                             <CCardGroup>
-                                <CCard className="p-4">
-                                    <CCardBody>
-                                        <CForm>
-                                            <h1>Login</h1>
-                                            <p className="text-muted">Sign In to your account</p>
-                                            <p className="text-muted"><font color="red">{statusMsg}</font></p>
-                                            <CInputGroup className="mb-3">
-                                                <CInputGroupPrepend>
-                                                    <CInputGroupText>
-                                                        <CIcon name="cil-user" />
-                                                    </CInputGroupText>
-                                                </CInputGroupPrepend>
-                                                <CInput
-                                                    type="text"
-                                                    placeholder="Username"
-                                                    name="username"
-                                                    autoComplete="username"
-                                                    value={username}
-                                                    onChange={userNameHandler}
-                                                />
-                                            </CInputGroup>
-                                            <CInputGroup className="mb-4">
-                                                <CInputGroupPrepend>
-                                                    <CInputGroupText>
-                                                        <CIcon name="cil-lock-locked" />
-                                                    </CInputGroupText>
-                                                </CInputGroupPrepend>
-                                                <CInput
-                                                    type="password"
-                                                    placeholder="Password"
-                                                    name="password"
-                                                    autoComplete="current-password"
-                                                    value={password}
-                                                    onChange={passwordHandler}
-                                                />
-                                            </CInputGroup>
-                                            <CRow>
-                                                <CCol xs="6">
-                                                    <CButton disabled={isLoading} color="primary" className="px-4"onClick={!isLoading ? handleSubmit : null}>
-                                                        {isLoading ? 'Loading…' : 'Login'}
-                                                    </CButton>
-                                                </CCol>
-                                                <CCol xs="6" className="text-right">
-                                                    <CButton color="link" className="px-0">Forgot password?</CButton>
-                                                </CCol>
-                                            </CRow>
-                                        </CForm>
-                                    </CCardBody>
+                            <CCard className="p-4">
+                                <CCardBody>
+                                <CForm>
+                                    <h1>Login</h1>
+                                    <p className="text-muted">Sign In to your account</p>
+                                    <p className="text-muted"><span style={{ color:"red", "fontSize":14 }}>{statusMsg}</span></p>
+                                    <CInputGroup className="mb-3">
+                                        <CInputGroupPrepend>
+                                            <CInputGroupText>
+                                                <CIcon name="cil-user" />
+                                            </CInputGroupText>
+                                        </CInputGroupPrepend>
+                                        <CInput
+                                            type="text"
+                                            placeholder="Username"
+                                            name="username"
+                                            autoComplete="username"
+                                            value={username}
+                                            onChange={userNameHandler}
+                                            
+                                        />
+                                    </CInputGroup>
+                                    <CInputGroup className="mb-4">
+                                        <CInputGroupPrepend>
+                                            <CInputGroupText>
+                                                <CIcon name="cil-lock-locked" />
+                                            </CInputGroupText>
+                                        </CInputGroupPrepend>
+                                        <CInput
+                                            type="password"
+                                            placeholder="Password"
+                                            name="password"
+                                            autoComplete="current-password"
+                                            value={password}
+                                            onChange={passwordHandler}
+                                            
+                                        />
+                                    </CInputGroup>
+                                    <CRow>
+                                        <CCol xs="6">
+                                            <CButton disabled={isLoading} color="primary" className="px-4"onClick={!isLoading ? handleSubmit : null}>
+                                                {isLoading ? 'Loading…' : 'Login'}
+                                            </CButton>
+                                        </CCol>
+                                        <CCol xs="6" className="text-right">
+                                            <CButton color="link" className="px-0">Forgot password?</CButton>
+                                        </CCol>
+                                    </CRow>
+                                </CForm>
+                                </CCardBody>
                                 </CCard>
                                 <CCard className="text-white bg-primary py-5 d-md-down-none" style={{ width: "44%" }}>
                                     <CCardBody className="text-center">
