@@ -43,12 +43,12 @@ const Login = () => {
             axios.post(proxyurl + basicURL + data.url, data.data).then((res) => {
                 if(res.data.status)  {
                     localStorage.setItem("token", "fkcnewproject");
-                    setIsLoading(false);
                     setLoggedIn(true);
                 }
                 else {
                     setStatusMsg(res.data.message);    
                 }
+                setIsLoading(false);
             });
         }
     }, [isLoading])
