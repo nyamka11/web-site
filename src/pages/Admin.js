@@ -1,7 +1,7 @@
 
 import  React, { useState  } from 'react';
 import { Link , Redirect} from 'react-router-dom'
-import {  Navbar, Container, Nav, NavDropdown, Jumbotron, Button } from 'react-bootstrap';
+import {  Navbar, Container, Nav, NavDropdown, CardGroup, Button, Card } from 'react-bootstrap';
 
 const Admin = () => {
     const token = localStorage.getItem("token");
@@ -12,10 +12,8 @@ const Admin = () => {
 
     const [isLogin, setIsLogin] = useState(loggedIn);
 
-    if(!isLogin)  {
-        return <Redirect to="/" />
-    }
-    else return (
+    if(!isLogin) return <Redirect to="/" />
+    return (
         <div>
             <Navbar collapseOnSelect expand="lg" bg="dark" variant="dark">
                 <Navbar.Brand href="#home">Hamamatsu ORI-Project</Navbar.Brand>
@@ -41,22 +39,29 @@ const Admin = () => {
                     </NavDropdown>
                     </Nav>
                     <Nav>
-                        <Nav.Link href="/logout">Login</Nav.Link>
-                        {/* <Link to="/logout">Logout</Link> */}
+                        <Link to="/logout"><Button variant="outline-success">Logout</Button></Link>
                     </Nav>
                 </Navbar.Collapse>
             </Navbar>
 
-            <Jumbotron>
-                <h1>Hello hamamatsu ORI project!</h1>
-                <p>
-                    This is a simple hero unit, a simple jumbotron-style component for calling
-                    extra attention to featured content or information.
-                </p>
-                <p>
-                    <Button variant="primary">Learn more</Button>
-                </p>
-            </Jumbotron>
+            <Card className="text-center">
+                <Card.Header className="text-left">Featured</Card.Header>
+                <Card.Body>
+
+                </Card.Body>
+                <Card.Footer>
+                    <Button variant="secondary">Button1</Button>{' '}
+                    <Button variant="secondary">Button2</Button>{' '}
+                    <Button variant="secondary">Button3</Button>{' '}
+                    <Button variant="secondary">Button4</Button>{' '}
+                </Card.Footer>
+            </Card>
+
+            <footer className="footer">
+                <div className="container">
+                    <span className="text-muted">Copyright © FKC会社 Hamamatsu-Ori 2020</span>
+                </div>
+            </footer>
         </div>
     );
 }

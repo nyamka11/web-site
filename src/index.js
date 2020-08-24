@@ -1,14 +1,17 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
+import 'react-app-polyfill/ie11';
+import 'react-app-polyfill/stable';
 import App from './App';
 import * as serviceWorker from './serviceWorker';
 import { BrowserRouter } from "react-router-dom";
 import "../node_modules/@coreui/coreui/dist/css/coreui.min.css";
 import 'bootstrap/dist/css/bootstrap.min.css';
+import './our.css';
 
 ReactDOM.render(
     <BrowserRouter>
-        <App/>        
+        <App/>      
     </BrowserRouter>
 , document.getElementById('root'));
 

@@ -13,7 +13,9 @@
         const [companyName, setCompayName] = useState("");
         const [guarantorName, setGuarantorName] = useState("");
         const [postCode, setPostCode] = useState("");
-        const [address, setAddress] = useState("");
+        const [address1, setAddress1] = useState("");
+        const [address2, setAddress2] = useState("");
+        const [address3, setAddress3] = useState("");
         const [guarantorPhoneNumber, setGuarantorPhoneNumber] = useState("");
         const [cellPhone, setCellPhone] = useState("");
         const [email, setEmail] = useState("");
@@ -23,6 +25,7 @@
             const proxyurl = "https://cors-anywhere.herokuapp.com/";
             axios.post(proxyurl+basicURL+url, data)
             .then(response => {
+                console.log(response);
                 onSuccess(response);
             });
         }
@@ -36,8 +39,14 @@
         const postCodeHandler = (event) => {
             setPostCode(event.target.value);
         }
-        const addressHandler = (event) => {
-            setAddress(event.target.value);
+        const addressHandler1 = (event) => {
+            setAddress1(event.target.value);
+        }
+        const addressHandler2 = (event) => {
+            setAddress2(event.target.value);
+        }
+        const addressHandler3 = (event) => {
+            setAddress3(event.target.value);
         }
         const guarantorPhoneHandler = (event) => {
             setGuarantorPhoneNumber(event.target.value);
@@ -55,7 +64,7 @@
                 companyname: companyName,
                 guarantorname: guarantorName,
                 postcode: postCode,
-                address: address,
+                address: address1+" "+address2+" "+address3,
                 guarantorphonenumber: guarantorPhoneNumber,
                 cellphone: cellPhone,
                 email: email
@@ -80,7 +89,11 @@
                     setCompayName("");
                     setGuarantorName("");
                     setPostCode("");
-                    setAddress("");
+
+                    setAddress1("");
+                    setAddress2("");
+                    setAddress3("");
+
                     setGuarantorPhoneNumber("");
                     setCellPhone("");
                     setEmail("");
@@ -112,15 +125,15 @@
                         <CCard className="mx-4">
                         <CCardBody className="p-4">
                             <CForm>
-                            <h1>Register</h1>
-                            <p className="text-muted">Create your account</p>
+                            <h1>新規会員登録</h1>
+                            <p className="text-muted">アカウントを作成</p>
                             <CInputGroup className="mb-3">
                                 <CInputGroupPrepend>
                                 <CInputGroupText>
                                     <CIcon name="cil-user" />
                                 </CInputGroupText>
                                 </CInputGroupPrepend>
-                                <CInput type="text" placeholder="Company name" name="asdf" defaultValue={ setCompayName } autoComplete="Companyname" onChange={companyNameHandler} />
+                                <CInput type="text" placeholder="会社名" defaultValue={ setCompayName } autoComplete="Companyname" onChange={companyNameHandler} />
                             </CInputGroup>
 
                             <CInputGroup className="mb-3">
@@ -129,7 +142,7 @@
                                     <CIcon name="cil-user" />
                                 </CInputGroupText>
                                 </CInputGroupPrepend>
-                                <CInput type="text" placeholder="Guarantor name" defaultValue={ setGuarantorName } autoComplete="Guarantorname" onChange={guarantorNameHandler} />
+                                <CInput type="text" placeholder="担当者名" defaultValue={ setGuarantorName } autoComplete="Guarantorname" onChange={guarantorNameHandler} />
                             </CInputGroup>
 
                             <CInputGroup className="mb-3">
@@ -138,7 +151,7 @@
                                     <CIcon name="cil-user" />
                                 </CInputGroupText>
                                 </CInputGroupPrepend>
-                                <CInput type="text" placeholder="Post code" defaultValue={ setPostCode } autoComplete="Postcode" onChange={postCodeHandler} />
+                                <CInput type="text" placeholder="郵便番号" defaultValue={ setPostCode } autoComplete="Postcode" onChange={postCodeHandler} />
                             </CInputGroup>
 
                             <CInputGroup className="mb-3">
@@ -147,7 +160,7 @@
                                     <CIcon name="cil-user" />
                                 </CInputGroupText>
                                 </CInputGroupPrepend>
-                                <CInput type="text" placeholder="Address" defaultValue={ setAddress } autoComplete="Address" onChange={addressHandler} />
+                                <CInput type="text" placeholder="住所1" defaultValue={ setAddress1 } autoComplete="Address" onChange={addressHandler1} />
                             </CInputGroup>
 
                             <CInputGroup className="mb-3">
@@ -156,7 +169,7 @@
                                     <CIcon name="cil-user" />
                                 </CInputGroupText>
                                 </CInputGroupPrepend>
-                                <CInput type="text" placeholder="Guarantor phone" defaultValue={ setGuarantorPhoneNumber } autoComplete="Guarantorphone" onChange={guarantorPhoneHandler} />
+                                <CInput type="text" placeholder="住所2" defaultValue={ setAddress2 } autoComplete="Address" onChange={addressHandler2} />
                             </CInputGroup>
 
                             <CInputGroup className="mb-3">
@@ -165,7 +178,25 @@
                                     <CIcon name="cil-user" />
                                 </CInputGroupText>
                                 </CInputGroupPrepend>
-                                <CInput type="text" placeholder="Cell phone" defaultValue={ setCellPhone } autoComplete="Cellphone" onChange={cellPhoneHandler} />
+                                <CInput type="text" placeholder="住所3" defaultValue={ setAddress3 } autoComplete="Address" onChange={addressHandler3} />
+                            </CInputGroup>
+
+                            <CInputGroup className="mb-3">
+                                <CInputGroupPrepend>
+                                <CInputGroupText>
+                                    <CIcon name="cil-user" />
+                                </CInputGroupText>
+                                </CInputGroupPrepend>
+                                <CInput type="text" placeholder="担当者電話番号" defaultValue={ setGuarantorPhoneNumber } autoComplete="Guarantorphone" onChange={guarantorPhoneHandler} />
+                            </CInputGroup>
+
+                            <CInputGroup className="mb-3">
+                                <CInputGroupPrepend>
+                                <CInputGroupText>
+                                    <CIcon name="cil-user" />
+                                </CInputGroupText>
+                                </CInputGroupPrepend>
+                                <CInput type="text" placeholder="担当者携帯電話番号" defaultValue={ setCellPhone } autoComplete="Cellphone" onChange={cellPhoneHandler} />
                             </CInputGroup>
 
                             <CInputGroup className="mb-3">
@@ -174,10 +205,10 @@
                                     @
                                 </CInputGroupText>
                                 </CInputGroupPrepend>
-                                <CInput type="text" placeholder="Email" defaultValue={ setEmail } autoComplete="Email" onChange={emailHandler} />
+                                <CInput type="text" placeholder="メール" defaultValue={ setEmail } autoComplete="Email" onChange={emailHandler} />
                             </CInputGroup>
                             
-                            <CButton color="success" block onClick={handleSubmit}>Create Account</CButton>
+                            <CButton color="success" block onClick={handleSubmit}>登録</CButton>
                             </CForm>
                         </CCardBody>
                         <CCardFooter className="p-4">

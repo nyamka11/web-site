@@ -26,7 +26,7 @@ const Login = () => {
     const [loggedIn, setLoggedIn] = useState(false);
     const [statusMsg, setStatusMsg] = useState(null);
     const [isLoading, setIsLoading] = useState(false);
-    const [data, setData] = useState({url: null, data: null });
+    const [data, setData] = useState({ url: null, data: null });
     
     const userNameHandler = (event) => {
         setUsername(event.target.value);
@@ -41,6 +41,7 @@ const Login = () => {
         console.log(data.url, data.data);
         if(isLoading)  {
             axios.post(proxyurl + basicURL + data.url, data.data).then((res) => {
+                console.log(res);
                 if(res.data.status)  {
                     localStorage.setItem("token", "fkcnewproject");
                     setLoggedIn(true);
@@ -72,13 +73,13 @@ const Login = () => {
         <div className="c-app c-default-layout flex-row align-items-center">
             <CContainer>
                 <CRow className="justify-content-center">
-                    <CCol md="8">
+                    <CCol md="9">
                         <CCardGroup>
                         <CCard className="p-4">
                             <CCardBody>
                             <CForm>
-                                <h1>Login</h1>
-                                <p className="text-muted">Sign In to your account</p>
+                                <h1>ログイン</h1>
+                                <p className="text-muted">アカウントにサインイン</p>
                                 <p className="text-muted"><span style={{ color:"red", "fontSize":14 }}>{statusMsg}</span></p>
                                 <CInputGroup className="mb-3">
                                     <CInputGroupPrepend>
@@ -88,7 +89,7 @@ const Login = () => {
                                     </CInputGroupPrepend>
                                     <CInput
                                         type="text"
-                                        placeholder="Username"
+                                        placeholder="ユーザー名"
                                         name="username"
                                         autoComplete="username"
                                         onChange={userNameHandler}
@@ -102,7 +103,7 @@ const Login = () => {
                                     </CInputGroupPrepend>
                                     <CInput
                                         type="password"
-                                        placeholder="Password"
+                                        placeholder="パスワード"
                                         name="password"
                                         autoComplete="current-password"
                                         onChange={passwordHandler}
@@ -110,27 +111,27 @@ const Login = () => {
                                 </CInputGroup>
                                 <CRow>
                                     <CCol xs="6">
-                                        <CButton disabled={isLoading} color="primary" className="px-4"onClick={!isLoading ? handleSubmit : null}>
-                                            {isLoading ? 'Loading…' : 'Login'}
+                                        <CButton disabled={isLoading} color="success" className="px-4"onClick={!isLoading ? handleSubmit : null}>
+                                            {isLoading ? 'ローディング…' : 'ログイン'}
                                         </CButton>
                                     </CCol>
                                     <CCol xs="6" className="text-right">
-                                        <CButton color="link" className="px-0">Forgot password?</CButton>
+                                        <small className="smallFont"><a href="#">パスワードをお忘れですか？</a></small>
                                     </CCol>
                                 </CRow>
                             </CForm>
                             </CCardBody>
                             </CCard>
-                            <CCard className="text-white bg-primary py-5 d-md-down-none" style={{ width: "44%" }}>
+                            <CCard className="text-white bg-primary py-5 d-md-down-none">
                                 <CCardBody className="text-center">
                                     <div>
-                                        <h2>Sign up</h2>
-                                        <p>Hamamatsu ORI-Project. <br />
-                                            Digital Smart City HAMAMATSU <br />
-                                            FKC inc.
+                                        <h2>サインアップ</h2>
+                                        <p>浜松ORI-Project。 <br />
+                                            デジタルスマートシティ浜松<br />
+                                            FKC株式会社
                                         </p>
                                         <Link to="/register">
-                                            <CButton color="primary" className="mt-3" active tabIndex={-1}>Register Now!</CButton>
+                                            <CButton color="primary" className="mt-3" active tabIndex={-1}>今すぐ登録！</CButton>
                                         </Link>
                                     </div>
                                 </CCardBody>
