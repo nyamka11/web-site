@@ -1,7 +1,10 @@
 
 import  React, { useState  } from 'react';
-import { Link , Redirect} from 'react-router-dom'
-import {  Navbar, Container, Nav, NavDropdown, CardGroup, Button, Card } from 'react-bootstrap';
+import { Link , Redirect } from 'react-router-dom';
+import { Jumbotron, Button, Card } from 'react-bootstrap';
+import  Navbar  from '../components/common/Navbar.js';
+import  Footer  from '../components/common/Footer.js';
+import  Alert  from '../components/common/Alert.js';
 
 const Admin = () => {
     const token = localStorage.getItem("token");
@@ -11,57 +14,47 @@ const Admin = () => {
     }
 
     const [isLogin, setIsLogin] = useState(loggedIn);
+    const [show, setShow] = useState(true);
 
     if(!isLogin) return <Redirect to="/" />
     return (
         <div>
-            <Navbar collapseOnSelect expand="lg" bg="dark" variant="dark">
-                <Navbar.Brand href="#home">Hamamatsu ORI-Project</Navbar.Brand>
-                <Navbar.Toggle aria-controls="responsive-navbar-nav" />
-                <Navbar.Collapse id="responsive-navbar-nav">
-                    <Nav className="mr-auto">
-                    <Nav.Link href="#features">Features</Nav.Link>
-                    <Nav.Link href="#pricing">Pricing</Nav.Link>
-                    <NavDropdown title="Dropdown" id="collasible-nav-dropdown">
-                        <NavDropdown.Item href="#action/3.1">
-                        Action
-                        </NavDropdown.Item>
-                        <NavDropdown.Item href="#action/3.2">
-                        Another action
-                        </NavDropdown.Item>
-                        <NavDropdown.Item href="#action/3.3">
-                        Something
-                        </NavDropdown.Item>
-                        <NavDropdown.Divider />
-                        <NavDropdown.Item href="#action/3.4">
-                        Separated link
-                        </NavDropdown.Item>
-                    </NavDropdown>
-                    </Nav>
-                    <Nav>
-                        <Link to="/logout"><Button variant="outline-success">Logout</Button></Link>
-                    </Nav>
-                </Navbar.Collapse>
-            </Navbar>
-
-            <Card className="text-center">
-                <Card.Header className="text-left">Featured</Card.Header>
-                <Card.Body>
-
-                </Card.Body>
-                <Card.Footer>
-                    <Button variant="secondary">Button1</Button>{' '}
-                    <Button variant="secondary">Button2</Button>{' '}
-                    <Button variant="secondary">Button3</Button>{' '}
-                    <Button variant="secondary">Button4</Button>{' '}
-                </Card.Footer>
-            </Card>
-
-            <footer className="footer">
-                <div className="container">
-                    <span className="text-muted">Copyright © FKC会社 Hamamatsu-Ori 2020</span>
+           <Navbar />
+            <div className="row pathRow" >
+                <div className="col-md">
+                    <div className="card-body">
+                        <span>Path : {window.location.pathname}</span></div>
+                    </div>
+                <div className="col-md"></div>
+                <div className="col-md">
+                    <Alert
+                        variant="success"
+                        title = "Oh snap! You got an error!"
+                        msg="Change this and that and try again." 
+                    />
                 </div>
-            </footer>
+            </div>
+
+            {/* body */}
+            <div  className="container">
+                <div className="card-body text-center">
+                    <h5 className="card-title">Special title treatment</h5>
+                    <p className="card-text">With supporting text below as a natural lead-in to additional content.</p>
+                    <br/><br/>
+
+                    <div className="jumbotron" style={{  height:465 }}>
+                        <h1>BODY</h1>
+                    </div>
+                </div>
+            </div>
+
+            <div className="card-footer text-center">
+                    <button type="button" className="btn btn-secondary">Button</button>{" "}
+                    <button type="button" className="btn btn-secondary">Button</button>{" "}
+                    <button type="button" className="btn btn-secondary">Button</button>{" "}
+                    <button type="button" className="btn btn-secondary">Button</button>{" "}
+                </div>
+            <Footer />
         </div>
     );
 }
