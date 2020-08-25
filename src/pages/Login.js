@@ -17,7 +17,7 @@ import {
 import CIcon from "@coreui/icons-react";
 import axios from "axios";
 import "react-notifications-component/dist/theme.css";
-// import { useFetch } from "../useFetch";
+import  Footer  from '../components/common/Footer.js';
 
 const Login = () => {
     const basicURL = "http://ec2-107-23-240-208.compute-1.amazonaws.com/api/";

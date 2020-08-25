@@ -3,13 +3,13 @@
 }
 .pathRow {
     margin-top:56px;
-    border-bottom:1px solid #e2e0e0
+    /* border-bottom:1px solid #e2e0e0 */
 }
 .alert {
     position: absolute;
     right: 0;
     width: 94%;
-    margin: 6px 22px 0px 0px;
+    margin: -10px 20px 0px 0px;
 }
 footer {
     padding: 33px;

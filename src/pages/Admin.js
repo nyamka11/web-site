@@ -1,10 +1,17 @@
 
 import  React, { useState  } from 'react';
 import { Link , Redirect } from 'react-router-dom';
-import { Jumbotron, Button, Card } from 'react-bootstrap';
+import { Button, Card, Breadcrumb } from 'react-bootstrap';
 import  Navbar  from '../components/common/Navbar.js';
 import  Footer  from '../components/common/Footer.js';
 import  Alert  from '../components/common/Alert.js';
+
+// import { Home } from './Home';
+// import { About } from './About';
+// import { Contact } from './Contact';
+// import { NoMatch } from './NoMatch';
+
+
 
 const Admin = () => {
     const token = localStorage.getItem("token");
@@ -21,12 +28,15 @@ const Admin = () => {
         <div>
            <Navbar />
             <div className="row pathRow" >
-                <div className="col-md">
-                    <div className="card-body">
-                        <span>Path : {window.location.pathname}</span></div>
-                    </div>
-                <div className="col-md"></div>
-                <div className="col-md">
+                <div className="col-12">
+                    <Breadcrumb>
+                        <Breadcrumb.Item href="#">Home</Breadcrumb.Item>
+                        <Breadcrumb.Item href="#">Library</Breadcrumb.Item>
+                        <Breadcrumb.Item active>Data</Breadcrumb.Item>
+                    </Breadcrumb>
+                </div>
+                <div className="col-md-8"></div>
+                <div className="col-md-4">
                     <Alert
                         variant="success"
                         title = "Oh snap! You got an error!"
@@ -38,11 +48,7 @@ const Admin = () => {
             {/* body */}
             <div  className="container">
                 <div className="card-body text-center">
-                    <h5 className="card-title">Special title treatment</h5>
-                    <p className="card-text">With supporting text below as a natural lead-in to additional content.</p>
-                    <br/><br/>
-
-                    <div className="jumbotron" style={{  height:465 }}>
+                    <div className="jumbotron" style={{  height:591 }}>
                         <h1>BODY</h1>
                     </div>
                 </div>
