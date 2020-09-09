@@ -1,3 +1,7 @@
+
+body  {
+    background-color:#ececec47;
+}
 .smallFont  {
     font-size:76%;
 }
@@ -5,12 +9,12 @@
     margin-top:56px;
     /* border-bottom:1px solid #e2e0e0 */
 }
-.alert {
+/* .alert {
     position: absolute;
     right: 0;
     width: 94%;
     margin: -10px 20px 0px 0px;
-}
+} */
 footer {
     padding: 33px;
     text-align: center;
@@ -18,3 +22,15 @@ footer {
     color: #b5c0ca !important;
     box-shadow: 0 -1px 1px 0 rgba(60,75,100,.14), 0 -2px 1px -1px rgba(60,75,100,.12), 0 -1px 3px 0 rgba(60,75,100,.2);
 }
+.page-wrap {
+    min-height: 100vh;
+}
+/* .registerinput {
+    width: 100%;
+}
+.registerAlert  {
+    position: fixed;
+    right: 0;
+    margin: -10px 20px 0px 0px;
+    text-align: center;
+} */

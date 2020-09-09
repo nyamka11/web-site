@@ -1,13 +1,6 @@
 
-    import  React, { useState  } from 'react';
-    import { CButton, CCard, CCardBody, CCardFooter, CCol, CContainer,CForm,
-      CInput, CInputGroup, CInputGroupPrepend, CInputGroupText, CRow
-    } from '@coreui/react'
-    import CIcon from '@coreui/icons-react'        
+    import  React, { useState  } from 'react';    
     import axios from 'axios';
-    import ReactNotification from 'react-notifications-component'
-    import 'react-notifications-component/dist/theme.css'
-    import { store } from 'react-notifications-component';
 
     const Register = () => {
         const [companyName, setCompayName] = useState("");
@@ -19,256 +12,262 @@
         const [guarantorPhoneNumber, setGuarantorPhoneNumber] = useState("");
         const [cellPhone, setCellPhone] = useState("");
         const [email, setEmail] = useState("");
-        const basicURL = "http://ec2-107-23-240-208.compute-1.amazonaws.com/api/";
+        const [isLoading, setIsLoading] = useState(false);
 
+        const [checkName, setCheckName] = useState("");
+        const [checkGuarantorName, setCheckGuarantorName] = useState("");
+        const [checkPostCode, setCheckPostCode] = useState("");
+        const [checkAddress1, setCheckAddress1] = useState("");
+        const [checkAddress2, setCheckAddress2] = useState("");
+        const [checkAddress3, setCheckAddress3] = useState("");
+        const [checkGuarantorPhoneNumber, setCheckGuarantorPhoneNumber] = useState("");
+        const [checkCellPhone, setCheckCellPhone] = useState("");
+        const [checkEmail, setCheckEmail] = useState("");
+        const [checkMailSyntax, setCheckMailSyntax] = useState("");
+        const [alert, setAlert] = useState({ type: null, msg: null });
+
+        const basicURL = "http://127.0.0.1/back_end_service/";
         const sendData = (url, data, onSuccess) => {
             const proxyurl = "https://cors-anywhere.herokuapp.com/";
-            axios.post(proxyurl+basicURL+url, data)
+            axios.post(basicURL+url, data)
             .then(response => {
                 console.log(response);
                 onSuccess(response);
+            })
+            .catch(error => {
+                console.log(error.response)
             });
         }
 
-        const companyNameHandler = (event) => {
-            setCompayName(event.target.value);
-        }
-        const guarantorNameHandler = (event) => {
-            setGuarantorName(event.target.value);
-        }
-        const postCodeHandler = (event) => {
-            setPostCode(event.target.value);
-        }
-        const addressHandler1 = (event) => {
-            setAddress1(event.target.value);
-        }
-        const addressHandler2 = (event) => {
-            setAddress2(event.target.value);
-        }
-        const addressHandler3 = (event) => {
-            setAddress3(event.target.value);
-        }
-        const guarantorPhoneHandler = (event) => {
-            setGuarantorPhoneNumber(event.target.value);
-        }
-        const cellPhoneHandler = (event) => {
-            setCellPhone(event.target.value);
-        }
-        const emailHandler = (event) => {
-            setEmail(event.target.value);
-        }
+        const companyNameHandler = (event) => setCompayName(event.target.value);
+        const guarantorNameHandler = (event) => setGuarantorName(event.target.value);
+        const postCodeHandler = (event) => setPostCode(event.target.value);
+        const addressHandler1 = (event) => setAddress1(event.target.value);
+        const addressHandler2 = (event) => setAddress2(event.target.value);
+        const addressHandler3 = (event) => setAddress3(event.target.value);
+        const guarantorPhoneHandler = (event) => setGuarantorPhoneNumber(event.target.value);
+        const cellPhoneHandler = (event) => setCellPhone(event.target.value);
+        const emailHandler = (event) => setEmail(event.target.value);
 
         const handleSubmit = (event) => {
-            event.preventDefault()
+            event.preventDefault();
             let data = {
                 companyname: companyName,
                 guarantorname: guarantorName,
                 postcode: postCode,
-                address: address1+" "+address2+" "+address3,
+                address1: address1,
+                address2: address2, 
+                address3: address3,
                 guarantorphonenumber: guarantorPhoneNumber,
                 cellphone: cellPhone,
                 email: email
             };
 
-            console.log(data);
+            checkCompanyNameFn();
+            checkGuarantorNameFn();
+            checkPostCodeFn();
+            checkAddress1Fn();
+            checkAddress2Fn();
+            checkAddress3Fn();
+            checkGuarantorPhoneNumberFn();
+            checkCellPhoneFn();
+            checkEmailFn();
+            checkEmailSyntaxFn();
 
-            sendData("company.php", JSON.stringify(data), function(response)  {
-                console.log(response.data.message);
-
-                let notify = {}
-                if(response.data.status == false)  {
-                    notify.type = "warning"
-                    notify.title = "Warning!";
-                    notify.message = response.data.message;
-                }
-                else if(response.data.status == true)  {
-                    notify.type = "success"
-                    notify.title = "Success!";
-                    notify.message = response.data.message;
-
-                    setCompayName("");
-                    setGuarantorName("");
-                    setPostCode("");
-
-                    setAddress1("");
-                    setAddress2("");
-                    setAddress3("");
-
-                    setGuarantorPhoneNumber("");
-                    setCellPhone("");
-                    setEmail("");
-                }
-
-                store.addNotification({
-                    title: notify.title,
-                    message: response.data.message,
-                    type: notify.type, //"success",
-                    insert: "top",
-                    container: "top-right",
-                    animationIn: ["animated", "fadeIn"],
-                    animationOut: ["animated", "fadeOut"],
-                    dismiss: {
-                        duration: 5000,
-                        onScreen: true
+            if(companyName !='' && guarantorName !='' &&  postCode !='' &&  address1 !='' &&  
+                address2 !='' &&  address3 !='' &&  guarantorPhoneNumber !='' && cellPhone !='' && 
+                email !='' && validateMail(email)
+            )  {
+                setIsLoading(true);
+                sendData("users/register", data, function(response)  {
+                    let responce = response.data.res;
+                    if(responce.status == 0)  {
+                        setAlert({ 
+                            type: "alert-danger", 
+                            msg:  responce.msg
+                        });
                     }
+                    else if(responce.status == 1)  {
+                        setAlert({ 
+                            type: "alert-success", 
+                            msg:  responce.msg
+                        });
+                    }
+                    setIsLoading(false);
                 });
+            }
+        }
 
-            });
+        /** check zone  */
+        const checkCompanyNameFn = () =>  {
+            if(companyName === "") setCheckName('Please enter more characters.');
+            else setCheckName('');
+        }
+
+        const renderErrorCompanyName = () => {
+            if(checkName !="")  {
+                return <small className="text-danger">{checkName}</small>;
+            }
+        }
+
+        const checkGuarantorNameFn = () =>  {
+            if(guarantorName === "") setCheckGuarantorName('setCheckGuarantorName');
+            else setCheckGuarantorName();
+        }
+
+        const renderErrorCheckGuarantorName = () => {
+            if(checkGuarantorName)  return <small className="text-danger">{checkGuarantorName}</small>;
+        }
+
+        const checkPostCodeFn = () =>  {
+            if(postCode === "") setCheckPostCode('post code empty');
+            else setCheckPostCode("");
+        }
+
+        const renderErrorCheckPostCode = () => {
+            if(checkPostCode)  return <small className="text-danger">{checkPostCode}</small>;
+        }
+
+        const checkAddress1Fn = () =>  {
+            if(address1 === "") setCheckAddress1('address 1');
+            else setCheckAddress1("");
+        }
+
+        const renderErrorCheckAddress1 = () => {
+            if(checkAddress1)  return <small className="text-danger">{checkAddress1}</small>;
+        }
+
+        const checkAddress2Fn = () =>  {
+            if(address2 === "") setCheckAddress2('address 2');
+            else setCheckAddress2("");
+        }
+
+        const renderErrorCheckAddress2 = () => {
+            if(checkAddress2)  return <small className="text-danger">{checkAddress2}</small>;
+        }
+
+        const checkAddress3Fn = () =>  {
+            if(address3 === "") setCheckAddress3('address 3');
+            else setCheckAddress3("");
+        }
+
+        const renderErrorCheckAddress3 = () => {
+            if(checkAddress3)  return <small className="text-danger">{checkAddress3}</small>;
+        }
+
+        const checkGuarantorPhoneNumberFn = () =>  {
+            if(guarantorPhoneNumber === "") setCheckGuarantorPhoneNumber('setCheckGuarantorPhoneNumber ');
+            else setCheckGuarantorPhoneNumber("");
+        }
+
+        const renderErrorCheckGuarantorPhoneNumber = () => {
+            if(checkGuarantorPhoneNumber)  return <small className="text-danger">{checkGuarantorPhoneNumber}</small>;
+        }
+
+        const checkCellPhoneFn = () =>  {
+            if(cellPhone === "") setCheckCellPhone('setCheckCellPhone ');
+            else setCheckCellPhone("");
+        }
+
+        const renderErrorCheckCellPhone = () => {
+            if(checkCellPhone)  return <small className="text-danger">{checkCellPhone}</small>;
+        }
+
+        const checkEmailFn = () =>  {
+            if(email === "") setCheckEmail('setCheckEmail  asdfafd ');
+            else setCheckEmail("");
+        }
+
+        const renderErrorCheckEmail = () => {
+            if(checkEmail)  return <small className="text-danger">{checkEmail}</small>;
+        }
+
+        const checkEmailSyntaxFn = () =>  {
+            if(email != "" && !validateMail(email)) setCheckMailSyntax('syntax error ');
+            else setCheckMailSyntax("");
+        }
+
+        const renderErrorCheckEmailSyntax = () => {
+            if(checkMailSyntax)  return <small className="text-danger">{checkMailSyntax}</small>;
+        }
+
+
+
+        function alertMsg(alert)  {
+            if(alert.type !=null)  {
+                if(alert.type == "alert-danger") return <div className="alert alert-danger registerAlert" role="alert">{alert.msg}</div>
+                else  return <div className="alert alert-success registerAlert" role="alert">{alert.msg}</div>
+            }
+        }
+
+        const validateMail = (email) => {
+            const expression = /(?!.*\.{2})^([a-z\d!#$%&'*+\-\/=?^_`{|}~\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF]+(\.[a-z\d!#$%&'*+\-\/=?^_`{|}~\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF]+)*|"((([\t]*\r\n)?[\t]+)?([\x01-\x08\x0b\x0c\x0e-\x1f\x7f\x21\x23-\x5b\x5d-\x7e\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF]|\\[\x01-\x09\x0b\x0c\x0d-\x7f\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF]))*(([\t]*\r\n)?[\t]+)?")@(([a-z\d\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF]|[a-z\d\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF][a-z\d\-._~\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF]*[a-z\d\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])\.)+([a-z\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF]|[a-z\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF][a-z\d\-._~\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF]*[a-z\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])\.?$/i;
+            return expression.test(String(email).toLowerCase())
         }
 
         return (
-            <div className="c-app c-default-layout flex-row align-items-center">
-                <ReactNotification />
-                <CContainer>
-                    <CRow className="justify-content-center">
-                    <CCol md="9" lg="7" xl="6">
-                        <CCard className="mx-4">
-                        <CCardBody className="p-4">
-                            <CForm>
-                            <h1>新規会員登録</h1>
-                            <p className="text-muted">アカウントを作成</p>
-                            <CInputGroup className="mb-3">
-                                <CInputGroupPrepend>
-                                <CInputGroupText>
-                                    <CIcon name="cil-user" />
-                                </CInputGroupText>
-                                </CInputGroupPrepend>
-                                <CInput type="text" placeholder="会社名" defaultValue={ setCompayName } autoComplete="Companyname" onChange={companyNameHandler} />
-                            </CInputGroup>
+            <div className="container">
+                <div className="row" style={{marginBottom: 28, marginTop: 28}}>
+                    <div className="col-md-8 m-auto">
+                        { alertMsg(alert) }
+                        <h1 className="display-4 text-center">サインアップ</h1>
+                        <p className="lead text-center">アカウントを作成</p>
 
-                            <CInputGroup className="mb-3">
-                                <CInputGroupPrepend>
-                                <CInputGroupText>
-                                    <CIcon name="cil-user" />
-                                </CInputGroupText>
-                                </CInputGroupPrepend>
-                                <CInput type="text" placeholder="担当者名" defaultValue={ setGuarantorName } autoComplete="Guarantorname" onChange={guarantorNameHandler} />
-                            </CInputGroup>
-
-                            <CInputGroup className="mb-3">
-                                <CInputGroupPrepend>
-                                <CInputGroupText>
-                                    <CIcon name="cil-user" />
-                                </CInputGroupText>
-                                </CInputGroupPrepend>
-                                <CInput type="text" placeholder="郵便番号" defaultValue={ setPostCode } autoComplete="Postcode" onChange={postCodeHandler} />
-                            </CInputGroup>
-
-                            <CInputGroup className="mb-3">
-                                <CInputGroupPrepend>
-                                <CInputGroupText>
-                                    <CIcon name="cil-user" />
-                                </CInputGroupText>
-                                </CInputGroupPrepend>
-                                <CInput type="text" placeholder="住所1" defaultValue={ setAddress1 } autoComplete="Address" onChange={addressHandler1} />
-                            </CInputGroup>
-
-                            <CInputGroup className="mb-3">
-                                <CInputGroupPrepend>
-                                <CInputGroupText>
-                                    <CIcon name="cil-user" />
-                                </CInputGroupText>
-                                </CInputGroupPrepend>
-                                <CInput type="text" placeholder="住所2" defaultValue={ setAddress2 } autoComplete="Address" onChange={addressHandler2} />
-                            </CInputGroup>
-
-                            <CInputGroup className="mb-3">
-                                <CInputGroupPrepend>
-                                <CInputGroupText>
-                                    <CIcon name="cil-user" />
-                                </CInputGroupText>
-                                </CInputGroupPrepend>
-                                <CInput type="text" placeholder="住所3" defaultValue={ setAddress3 } autoComplete="Address" onChange={addressHandler3} />
-                            </CInputGroup>
-
-                            <CInputGroup className="mb-3">
-                                <CInputGroupPrepend>
-                                <CInputGroupText>
-                                    <CIcon name="cil-user" />
-                                </CInputGroupText>
-                                </CInputGroupPrepend>
-                                <CInput type="text" placeholder="担当者電話番号" defaultValue={ setGuarantorPhoneNumber } autoComplete="Guarantorphone" onChange={guarantorPhoneHandler} />
-                            </CInputGroup>
-
-                            <CInputGroup className="mb-3">
-                                <CInputGroupPrepend>
-                                <CInputGroupText>
-                                    <CIcon name="cil-user" />
-                                </CInputGroupText>
-                                </CInputGroupPrepend>
-                                <CInput type="text" placeholder="担当者携帯電話番号" defaultValue={ setCellPhone } autoComplete="Cellphone" onChange={cellPhoneHandler} />
-                            </CInputGroup>
-
-                            <CInputGroup className="mb-3">
-                                <CInputGroupPrepend>
-                                <CInputGroupText>
-                                    @
-                                </CInputGroupText>
-                                </CInputGroupPrepend>
-                                <CInput type="text" placeholder="メール" defaultValue={ setEmail } autoComplete="Email" onChange={emailHandler} />
-                            </CInputGroup>
-                            
-                            <CButton color="success" block onClick={handleSubmit}>登録</CButton>
-                            </CForm>
-                        </CCardBody>
-                        <CCardFooter className="p-4">
-                            <CRow>
-                            <CCol xs="12" sm="6">
-                                {/* <CButton className="btn-facebook mb-1" block><span>facebook</span></CButton> */}
-                            </CCol>
-                            <CCol xs="12" sm="6">
-                                {/* <CButton className="btn-twitter mb-1" block><span>twitter</span></CButton> */}
-                            </CCol>
-                            </CRow>
-                        </CCardFooter>
-                        </CCard>
-                    </CCol>
-                    </CRow>
-                </CContainer>
+                        <div className="container">
+                            <div className="form-group">
+                                <label className="form-control-label">会社名:</label>
+                                <input type="text" name="Companyname" className="registerinput form-control form-control-lg" value={companyName} onChange={companyNameHandler}/>
+                                {renderErrorCompanyName()}
+                            </div>
+                            <div className="form-group">
+                                <label className="form-control-label">担当者名:</label>
+                                <input type="text" name="Guarantorname"  className="registerinput form-control form-control-lg" value={guarantorName} onChange={guarantorNameHandler} />
+                                {renderErrorCheckGuarantorName()}
+                            </div>
+                            <div className="form-group">
+                                <label className="form-control-label">郵便番号:</label>
+                                <input type="text" name="Postcode"  className="registerinput form-control form-control-lg" value={postCode} onChange={postCodeHandler} />
+                                {renderErrorCheckPostCode()}
+                            </div>
+                            <div className="form-group">
+                                <label className="form-control-label">住所1:</label>
+                                <input type="text" name="Address1" className="registerinput form-control form-control-lg" value={address1} onChange={addressHandler1} />
+                                {renderErrorCheckAddress1()}
+                            </div>
+                            <div className="form-group">
+                                <label className="form-control-label">住所2:</label>
+                                <input type="text" name="Address2" className="registerinput form-control form-control-lg" value={address2} onChange={addressHandler2} />
+                                {renderErrorCheckAddress2()}
+                            </div>
+                            <div className="form-group">
+                                <label className="form-control-label">住所3:</label>
+                                <input type="text" name="Address3" className="registerinput form-control form-control-lg" value={address3} onChange={addressHandler3} />
+                                {renderErrorCheckAddress3()}
+                            </div>
+                            <div className="form-group">
+                                <label className="form-control-label">担当者電話番号:</label>
+                                <input type="text" name="Guarantorphone" className="registerinput form-control form-control-lg" value={guarantorPhoneNumber} onChange={guarantorPhoneHandler} />
+                                {renderErrorCheckGuarantorPhoneNumber()}
+                            </div>
+                            <div className="form-group">
+                                <label className="form-control-label">担当者携帯電話番号:</label>
+                                <input type="text" name="Cellphone" className="registerinput form-control form-control-lg" value={cellPhone} onChange={cellPhoneHandler} />
+                                {renderErrorCheckCellPhone()}
+                            </div>
+                            <div className="form-group">
+                                <h6>メール</h6>
+                                <input type="text" name="email" className="registerinput form-control form-control-lg" value={email} onChange={emailHandler}/>
+                                {renderErrorCheckEmail()}
+                                {renderErrorCheckEmailSyntax()}
+                            </div>
+                            <input type="button" disabled={isLoading ? true : false} value={isLoading ? "Loading..." : "Register"} onClick={handleSubmit} className="btn btn-info btn-block mt-4" />
+                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                        </div>
+                    </div>
+                </div>
             </div>
         )
     }
     
     export default Register
     
-
-
-    // function CompanyRegister()  {
-    //     
-    //     return  (
-    //         <div>
-    //             <ReactNotification />
-    //             <form onSubmit={handleSubmit}>
-    //                 <h1>Registration</h1>
-    //                 <table >
-    //                     <tbody>
-    //                     <tr><td><label>Company name :</label></td>
-    //                         <td><input type="text" value={companyName} onChange={companyNameHandler} placeholder="Company name..." /></td></tr>
-    //                     <tr><td><label>Guarantor name:</label></td>
-    //                         <td><input type="text" value={guarantorName} onChange={guarantorNameHandler} placeholder="Guarantor name..." /></td></tr>
-    //                     <tr><td><label>Post code :</label></td>
-    //                         <td><input type="text" value={postCode} onChange={postCodeHandler} placeholder="Post code..." /></td></tr>
-    //                     <tr><td><label>Address :</label></td>
-    //                         <td><input type="text" value={address} onChange={addressHandler} placeholder="Address..." /></td></tr>
-    //                     <tr><td><label>Guarantor phone :</label></td>
-    //                         <td><input type="text" value={guarantorPhoneNumber} onChange={guarantorPhoneHandler} placeholder="Guarantor phone..." /></td></tr>
-    //                     <tr><td><label>Cell phone :</label></td>
-    //                         <td><input type="text" value={cellPhone} onChange={cellPhoneHandler} placeholder="Cell phone..." /></td></tr>
-    //                     <tr><td><label>Email :</label></td>
-    //                         <td><input type="text" value={email} onChange={emailHandler} placeholder="Email..." /></td></tr>
-    //                     </tbody>
-    //                 </table><br/>
-    //                 <input className="submit" type="submit" value="Submit" />
-    //             </form>
-    //         </div>
-
-    //     )
-    // }
-    // //
-    // //
-    // //     <option defaultValue>Select Gender</option>
-    // //     <option value="male">Male</option>
-    // //     <option value="female">Female</option>
-    // // </select><br />
-
-    // export default CompanyRegister

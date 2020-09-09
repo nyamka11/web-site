@@ -19,8 +19,9 @@ import axios from "axios";
 import "react-notifications-component/dist/theme.css";
 import  Footer  from '../components/common/Footer.js';
 
-const Login = () => {
-    const basicURL = "http://ec2-107-23-240-208.compute-1.amazonaws.com/api/";
+const Login = (props) => {
+    // const basicURL = "http://ec2-107-23-240-208.compute-1.amazonaws.com/api/";
+    const basicURL = "http://127.0.0.1/back_end_service/";
     const [username, setUsername] = useState("");
     const [password, setPassword] = useState("");
     const [loggedIn, setLoggedIn] = useState(false);
@@ -40,14 +41,14 @@ const Login = () => {
         const proxyurl = "https://cors-anywhere.herokuapp.com/";
         console.log(data.url, data.data);
         if(isLoading)  {
-            axios.post(proxyurl + basicURL + data.url, data.data).then((res) => {
-                console.log(res);
-                if(res.data.status)  {
+            axios.post(basicURL + data.url, data.data).then((responce) => {
+                console.log(responce);
+                if(responce.data.res.status)  {
                     localStorage.setItem("token", "fkcnewproject");
                     setLoggedIn(true);
                 }
                 else {
-                    setStatusMsg(res.data.message);    
+                    setStatusMsg(responce.data.res.msg);    
                 }
                 setIsLoading(false);
             });
@@ -63,15 +64,15 @@ const Login = () => {
 
         setIsLoading(true);
         setData({
-            url: "User/login.php" , 
+            url: "users/login" , 
             data: "&username=" + username + "&password=" + password 
         });
     };
 
-    if(loggedIn)  return <Redirect to="/admin" />;
+    if(loggedIn)  return <Redirect to="/home" />;
     return (
         <div className="c-app c-default-layout flex-row align-items-center">
-            <CContainer>
+            <CContainer>      
                 <CRow className="justify-content-center">
                     <CCol md="9">
                         <CCardGroup>
@@ -81,33 +82,11 @@ const Login = () => {
                                 <h1>ログイン</h1>
                                 <p className="text-muted">アカウントにサインイン</p>
                                 <p className="text-muted"><span style={{ color:"red", "fontSize":14 }}>{statusMsg}</span></p>
-                                <CInputGroup className="mb-3">
-                                    <CInputGroupPrepend>
-                                        <CInputGroupText>
-                                            <CIcon name="cil-user" />
-                                        </CInputGroupText>
-                                    </CInputGroupPrepend>
-                                    <CInput
-                                        type="text"
-                                        placeholder="ユーザー名"
-                                        name="username"
-                                        autoComplete="username"
-                                        onChange={userNameHandler}
-                                    />
+                                <CInputGroup className="mb-4">
+                                    <input type="text" placeholder="ユーザー名" name="username" className="registerinput form-control form-control-lg" onChange={userNameHandler} />
                                 </CInputGroup>
                                 <CInputGroup className="mb-4">
-                                    <CInputGroupPrepend>
-                                        <CInputGroupText>
-                                            <CIcon name="cil-lock-locked" />
-                                        </CInputGroupText>
-                                    </CInputGroupPrepend>
-                                    <CInput
-                                        type="password"
-                                        placeholder="パスワード"
-                                        name="password"
-                                        autoComplete="current-password"
-                                        onChange={passwordHandler}
-                                    />
+                                    <input type="password" placeholder="パスワード" name="password" className="registerinput form-control form-control-lg" onChange={passwordHandler} />
                                 </CInputGroup>
                                 <CRow>
                                     <CCol xs="6">
@@ -116,7 +95,7 @@ const Login = () => {
                                         </CButton>
                                     </CCol>
                                     <CCol xs="6" className="text-right">
-                                        <small className="smallFont"><a href="#">パスワードをお忘れですか？</a></small>
+                                        <small className="smallFont"><a href="/forgotpassword">パスワードをお忘れですか？</a></small>
                                     </CCol>
                                 </CRow>
                             </CForm>
