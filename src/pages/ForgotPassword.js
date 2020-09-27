@@ -5,7 +5,7 @@ const ForgetPassword = () => {
     const [email, setEmail] = useState("");
     const [resMsg, setResMsg] = useState("");
 
-    const basicURL = "http://127.0.0.1/back_end_service/";
+    const basicURL = "http://127.0.0.1/backEnd/";
     const sendData = (url, data, onSuccess) => {
         axios.post(basicURL+url, data)
         .then(response => {

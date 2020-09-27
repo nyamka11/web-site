@@ -21,7 +21,7 @@ import  Footer  from '../components/common/Footer.js';
 
 const Login = (props) => {
     // const basicURL = "http://ec2-107-23-240-208.compute-1.amazonaws.com/api/";
-    const basicURL = "http://127.0.0.1/back_end_service/";
+    const basicURL = "http://127.0.0.1/backEnd/";
     const [username, setUsername] = useState("");
     const [password, setPassword] = useState("");
     const [loggedIn, setLoggedIn] = useState(false);

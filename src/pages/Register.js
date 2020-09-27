@@ -26,7 +26,7 @@
         const [checkMailSyntax, setCheckMailSyntax] = useState("");
         const [alert, setAlert] = useState({ type: null, msg: null });
 
-        const basicURL = "http://127.0.0.1/back_end_service/";
+        const basicURL = "http://127.0.0.1/backEnd/";
         const sendData = (url, data, onSuccess) => {
             const proxyurl = "https://cors-anywhere.herokuapp.com/";
             axios.post(basicURL+url, data)

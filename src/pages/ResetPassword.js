@@ -4,7 +4,7 @@ import axios from 'axios';
 const ResetPassword = (props) => {
     const [password, setPassword] = useState("");
 
-    const basicURL = "http://127.0.0.1/back_end_service/";
+    const basicURL = "http://127.0.0.1/backEnd/";
     const sendData = (url, data, onSuccess) => {
         axios.post(basicURL+url, data)
         .then(response => {
@@ -36,7 +36,7 @@ const ResetPassword = (props) => {
                     <h3 className="card-header">Reset Password</h3>
                     <div className="card-body">
                         {/* <form> */}
-                            <div class="form-group">
+                            <div className="form-group">
                                 <input type="password" name="password" className="registerinput form-control form-control-lg" onChange={getNewPasswordHandler}/>
                             </div>
                             <input type="button" value="Get New Password" onClick={onClick} className="btn btn-primary"/>
