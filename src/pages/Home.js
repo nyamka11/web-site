@@ -2,7 +2,7 @@
 import  React, { useState  } from 'react';
 // import { Link , Redirect } from 'react-router-dom';
 import { Breadcrumb } from 'react-bootstrap';
-import  Navbar  from '../components/common/Navbar.js';
+import  NavbarComponent  from '../components/common/Navbar.js';
 import  Footer  from '../components/common/Footer.js';
 import  Alert  from '../components/common/Alert.js';
 
@@ -20,40 +20,41 @@ const Home = () => {
     if(!isLogin) return <Redirect to="/" />
     return (
         <div>
-           <Navbar />
-            <div className="row pathRow" >
-                <div className="col-12">
-                    <Breadcrumb>
-                        <Breadcrumb.Item href="/home">Home</Breadcrumb.Item>
-                        <Breadcrumb.Item href="contact">Contact</Breadcrumb.Item>
-                        <Breadcrumb.Item active>Data</Breadcrumb.Item>
-                    </Breadcrumb>
-                </div>
-                <div className="col-md-8"></div>
-                <div className="col-md-4">
-                    <Alert
-                        variant="danger"
-                        title = "Oh snap! You got an error!"
-                        msg="Change this and that and try again." 
-                    />
-                </div>
-            </div>
-
+           <NavbarComponent />
             {/* body */}
-            <div className="container">
-                <div className="card-body text-center">
-                    <div className="jumbotron" style={{  }}>
-                        <h1>BODY</h1>
-                    </div>
+            <div className="container pt-5">
+                <div class="mt-5">
+                    <h2>Member list</h2>
+                    <p>The .table class adds basic styling (light padding and only horizontal dividers) to a table:</p>            
+                    <table class="table">
+                        <thead>
+                        <tr>
+                            <th>Firstname</th>
+                            <th>Lastname</th>
+                            <th>Email</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr>
+                            <td>John</td>
+                            <td>Doe</td>
+                            <td>john@example.com</td>
+                        </tr>
+                        <tr>
+                            <td>Mary</td>
+                            <td>Moe</td>
+                            <td>mary@example.com</td>
+                        </tr>
+                        <tr>
+                            <td>July</td>
+                            <td>Dooley</td>
+                            <td>july@example.com</td>
+                        </tr>
+                        </tbody>
+                    </table>
                 </div>
             </div>
 
-            <div className="card-footer text-center">
-                <button type="button" className="btn btn-secondary">Button</button>{" "}
-                <button type="button" className="btn btn-secondary">Button</button>{" "}
-                <button type="button" className="btn btn-secondary">Button</button>{" "}
-                <button type="button" className="btn btn-secondary">Button</button>{" "}
-            </div>
             <Footer />
         </div>
     );

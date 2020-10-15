@@ -191,10 +191,9 @@
             if(checkMailSyntax)  return <small className="text-danger">{checkMailSyntax}</small>;
         }
 
-
-
         function alertMsg(alert)  {
             if(alert.type !=null)  {
+                window.scrollTo(0, 0);
                 if(alert.type == "alert-danger") return <div className="alert alert-danger registerAlert" role="alert">{alert.msg}</div>
                 else  return <div className="alert alert-success registerAlert" role="alert">{alert.msg}</div>
             }
@@ -202,68 +201,62 @@
 
         const validateMail = (email) => {
             const expression = /(?!.*\.{2})^([a-z\d!#$%&'*+\-\/=?^_`{|}~\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF]+(\.[a-z\d!#$%&'*+\-\/=?^_`{|}~\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF]+)*|"((([\t]*\r\n)?[\t]+)?([\x01-\x08\x0b\x0c\x0e-\x1f\x7f\x21\x23-\x5b\x5d-\x7e\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF]|\\[\x01-\x09\x0b\x0c\x0d-\x7f\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF]))*(([\t]*\r\n)?[\t]+)?")@(([a-z\d\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF]|[a-z\d\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF][a-z\d\-._~\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF]*[a-z\d\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])\.)+([a-z\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF]|[a-z\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF][a-z\d\-._~\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF]*[a-z\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])\.?$/i;
-            return expression.test(String(email).toLowerCase())
+            return expression.test(String(email).toLowerCase());
         }
 
         return (
-            <div className="container">
-                <div className="row" style={{marginBottom: 28, marginTop: 28}}>
-                    <div className="col-md-8 m-auto">
-                        { alertMsg(alert) }
-                        <h1 className="display-4 text-center">サインアップ</h1>
-                        <p className="lead text-center">アカウントを作成</p>
-
-                        <div className="container">
-                            <div className="form-group">
-                                <label className="form-control-label">会社名:</label>
-                                <input type="text" name="Companyname" className="registerinput form-control form-control-lg" value={companyName} onChange={companyNameHandler}/>
-                                {renderErrorCompanyName()}
-                            </div>
-                            <div className="form-group">
-                                <label className="form-control-label">担当者名:</label>
-                                <input type="text" name="Guarantorname"  className="registerinput form-control form-control-lg" value={guarantorName} onChange={guarantorNameHandler} />
-                                {renderErrorCheckGuarantorName()}
-                            </div>
-                            <div className="form-group">
-                                <label className="form-control-label">郵便番号:</label>
-                                <input type="text" name="Postcode"  className="registerinput form-control form-control-lg" value={postCode} onChange={postCodeHandler} />
-                                {renderErrorCheckPostCode()}
-                            </div>
-                            <div className="form-group">
-                                <label className="form-control-label">住所1:</label>
-                                <input type="text" name="Address1" className="registerinput form-control form-control-lg" value={address1} onChange={addressHandler1} />
-                                {renderErrorCheckAddress1()}
-                            </div>
-                            <div className="form-group">
-                                <label className="form-control-label">住所2:</label>
-                                <input type="text" name="Address2" className="registerinput form-control form-control-lg" value={address2} onChange={addressHandler2} />
-                                {renderErrorCheckAddress2()}
-                            </div>
-                            <div className="form-group">
-                                <label className="form-control-label">住所3:</label>
-                                <input type="text" name="Address3" className="registerinput form-control form-control-lg" value={address3} onChange={addressHandler3} />
-                                {renderErrorCheckAddress3()}
-                            </div>
-                            <div className="form-group">
-                                <label className="form-control-label">担当者電話番号:</label>
-                                <input type="text" name="Guarantorphone" className="registerinput form-control form-control-lg" value={guarantorPhoneNumber} onChange={guarantorPhoneHandler} />
-                                {renderErrorCheckGuarantorPhoneNumber()}
-                            </div>
-                            <div className="form-group">
-                                <label className="form-control-label">担当者携帯電話番号:</label>
-                                <input type="text" name="Cellphone" className="registerinput form-control form-control-lg" value={cellPhone} onChange={cellPhoneHandler} />
-                                {renderErrorCheckCellPhone()}
-                            </div>
-                            <div className="form-group">
-                                <h6>メール</h6>
-                                <input type="text" name="email" className="registerinput form-control form-control-lg" value={email} onChange={emailHandler}/>
-                                {renderErrorCheckEmail()}
-                                {renderErrorCheckEmailSyntax()}
-                            </div>
-                            <input type="button" disabled={isLoading ? true : false} value={isLoading ? "Loading..." : "Register"} onClick={handleSubmit} className="btn btn-info btn-block mt-4" />
-                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                        </div>
+            <div className="container pt-3 pb-5">
+                { alertMsg(alert) }
+                <h1 className="display-4 text-center">サインアップ</h1>
+                <p className="lead text-center">アカウントを作成</p>
+                <div className="card-body bg-white p-5 shadow">
+                    <div className="form-group">
+                        <label className="form-control-label">会社名:</label>
+                        <input type="text" name="Companyname" className="registerinput form-control" value={companyName} onChange={companyNameHandler}/>
+                        {renderErrorCompanyName()}
                     </div>
+                    <div className="form-group">
+                        <label className="form-control-label">担当者名:</label>
+                        <input type="text" name="Guarantorname"  className="registerinput form-control" value={guarantorName} onChange={guarantorNameHandler} />
+                        {renderErrorCheckGuarantorName()}
+                    </div>
+                    <div className="form-group">
+                        <label className="form-control-label">郵便番号:</label>
+                        <input type="text" name="Postcode"  className="registerinput form-control" value={postCode} onChange={postCodeHandler} />
+                        {renderErrorCheckPostCode()}
+                    </div>
+                    <div className="form-group">
+                        <label className="form-control-label">住所1:</label>
+                        <input type="text" name="Address1" className="registerinput form-control" value={address1} onChange={addressHandler1} />
+                        {renderErrorCheckAddress1()}
+                    </div>
+                    <div className="form-group">
+                        <label className="form-control-label">住所2:</label>
+                        <input type="text" name="Address2" className="registerinput form-control" value={address2} onChange={addressHandler2} />
+                        {renderErrorCheckAddress2()}
+                    </div>
+                    <div className="form-group">
+                        <label className="form-control-label">住所3:</label>
+                        <input type="text" name="Address3" className="registerinput form-control" value={address3} onChange={addressHandler3} />
+                        {renderErrorCheckAddress3()}
+                    </div>
+                    <div className="form-group">
+                        <label className="form-control-label">担当者電話番号:</label>
+                        <input type="text" name="Guarantorphone" className="registerinput form-control" value={guarantorPhoneNumber} onChange={guarantorPhoneHandler} />
+                        {renderErrorCheckGuarantorPhoneNumber()}
+                    </div>
+                    <div className="form-group">
+                        <label className="form-control-label">担当者携帯電話番号:</label>
+                        <input type="text" name="Cellphone" className="registerinput form-control" value={cellPhone} onChange={cellPhoneHandler} />
+                        {renderErrorCheckCellPhone()}
+                    </div>
+                    <div className="form-group">
+                        <h6>メール</h6>
+                        <input type="text" name="email" className="registerinput form-control" value={email} onChange={emailHandler}/>
+                        {renderErrorCheckEmail()}
+                        {renderErrorCheckEmailSyntax()}
+                    </div>
+                    <input type="button" disabled={isLoading ? true : false} value={isLoading ? "Loading..." : "Register"} onClick={handleSubmit} className="btn btn-info btn-block mt-4" />
                 </div>
             </div>
         )

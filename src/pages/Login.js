@@ -8,19 +8,26 @@ import {
     CCol,
     CContainer,
     CForm,
-    CInput,
     CInputGroup,
-    CInputGroupPrepend,
-    CInputGroupText,
     CRow,
 } from "@coreui/react";
-import CIcon from "@coreui/icons-react";
 import axios from "axios";
-import "react-notifications-component/dist/theme.css";
-import  Footer  from '../components/common/Footer.js';
+import SelectAll from '../common/Fiware/SelectAll';
+import Insert from '../common/Fiware/Insert';
+import Delete from '../common/Fiware/Delete';
+import Select from '../common/Fiware/Select';
+import Update from '../common/Fiware/Update';
+import Search from "../common/Fiware/Search";
 
-const Login = (props) => {
-    // const basicURL = "http://ec2-107-23-240-208.compute-1.amazonaws.com/api/";
+class User {
+    constructor(Id, Name, Email) {
+        this.Id = Id;
+        this.Name = Name;
+        this.Email = Email;
+    }
+}
+
+const Login = (props) =>  {
     const basicURL = "http://127.0.0.1/backEnd/";
     const [username, setUsername] = useState("");
     const [password, setPassword] = useState("");
@@ -28,7 +35,7 @@ const Login = (props) => {
     const [statusMsg, setStatusMsg] = useState(null);
     const [isLoading, setIsLoading] = useState(false);
     const [data, setData] = useState({ url: null, data: null });
-    
+
     const userNameHandler = (event) => {
         setUsername(event.target.value);
     };
@@ -44,7 +51,18 @@ const Login = (props) => {
             axios.post(basicURL + data.url, data.data).then((responce) => {
                 console.log(responce);
                 if(responce.data.res.status)  {
+
+                    localStorage.setItem("oriData", {
+                        "token":  "fkcnewproject",
+                        "userId": responce.data.res.data.id,
+                        "name": responce.data.res.data.name,
+                        "userName": responce.data.res.data.username
+                    });
+
                     localStorage.setItem("token", "fkcnewproject");
+                    localStorage.setItem("userId", responce.data.res.data.id);
+                    localStorage.setItem("name", responce.data.res.data.name);
+                    localStorage.setItem("userName", responce.data.res.data.username);
                     setLoggedIn(true);
                 }
                 else {

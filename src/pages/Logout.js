@@ -20,6 +20,9 @@ const Logout = () => {
     // sendData("users/logout", "", function(response)  {
     //     // console.log(response);
         localStorage.removeItem("token");
+        localStorage.removeItem("userId");
+        localStorage.removeItem("name");
+        localStorage.removeItem("userName");
         return <Redirect to="/" />;
         // setIsLogOut(true);
     // });
