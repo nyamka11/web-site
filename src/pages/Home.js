@@ -1,10 +1,10 @@
 
 import  React, { useState  } from 'react';
-// import { Link , Redirect } from 'react-router-dom';
+import { Admin } from 'reac-admin';
 import { Breadcrumb } from 'react-bootstrap';
 import  NavbarComponent  from '../components/common/Navbar.js';
 import  Footer  from '../components/common/Footer.js';
-import  Alert  from '../components/common/Alert.js';
+
 
 import { BrowserRouter as Redirect } from 'react-router-dom';
 
@@ -54,7 +54,6 @@ const Home = () => {
                     </table>
                 </div>
             </div>
-
             <Footer />
         </div>
     );
