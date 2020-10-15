@@ -1,6 +1,6 @@
 
 import  React, { useState  } from 'react';
-import { Admin } from 'reac-admin';
+import { Admin } from 'react-admin';
 import { Breadcrumb } from 'react-bootstrap';
 import  NavbarComponent  from '../components/common/Navbar.js';
 import  Footer  from '../components/common/Footer.js';

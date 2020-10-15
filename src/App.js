@@ -12,7 +12,6 @@
 
     import Home from './pages/Home';
     import About from './pages/About';
-    import Maps from './pages/Maps';
     import Contact from './pages/Contact';
     import Admin from './pages/Admin';
     import NoMatch  from './pages/NoMatch';
@@ -27,7 +26,6 @@
             <Route exact path="/resetpassword" component={ResetPassword} />
             <PrivateRoute exact path="/home" component={ Home } />
             <PrivateRoute exact path="/contact" component={ Contact } />
-            <PrivateRoute exact path="/maps" component={ Maps } />
             <PrivateRoute exact path="/admin" component={ Admin } />
             <PrivateRoute exact path="/about" component={ About } />
             <PrivateRoute exact path="/logout" component={ Logout } />
