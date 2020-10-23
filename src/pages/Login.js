@@ -19,14 +19,6 @@ import Select from '../common/Fiware/Select';
 import Update from '../common/Fiware/Update';
 import Search from "../common/Fiware/Search";
 
-class User {
-    constructor(Id, Name, Email) {
-        this.Id = Id;
-        this.Name = Name;
-        this.Email = Email;
-    }
-}
-
 const Login = (props) =>  {
     const basicURL = "http://127.0.0.1/backEnd/";
     const [username, setUsername] = useState("");
@@ -51,18 +43,14 @@ const Login = (props) =>  {
             axios.post(basicURL + data.url, data.data).then((responce) => {
                 console.log(responce);
                 if(responce.data.res.status)  {
-
-                    localStorage.setItem("oriData", {
+                    localStorage.setItem("data", JSON.stringify({
                         "token":  "fkcnewproject",
+                        "comId": responce.data.res.data.company_id,
                         "userId": responce.data.res.data.id,
                         "name": responce.data.res.data.name,
                         "userName": responce.data.res.data.username
-                    });
+                    }));
 
-                    localStorage.setItem("token", "fkcnewproject");
-                    localStorage.setItem("userId", responce.data.res.data.id);
-                    localStorage.setItem("name", responce.data.res.data.name);
-                    localStorage.setItem("userName", responce.data.res.data.username);
                     setLoggedIn(true);
                 }
                 else {

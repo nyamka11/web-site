@@ -2,7 +2,7 @@
     import React, { Component } from 'react';
     import  {BrowserRouter, Redirect, Route, Switch ,Link } from "react-router-dom";
     import { ProtectedRoute } from "./protected.route";
-
+    import Constants from "./common/constant";
 
     import Register from './pages/Register';
     import Login from './pages/Login';
@@ -14,6 +14,12 @@
     import About from './pages/About';
     import Contact from './pages/Contact';
     import Admin from './pages/Admin';
+
+    import UsersControl from './pages/UsersControl';
+    import AddUser from "./pages/UsersControl/AddUser";
+    import EditUser from "./pages/UsersControl/EditUser";
+    import User from "./pages/UsersControl/User";
+
     import NoMatch  from './pages/NoMatch';
 
     function App() {
@@ -29,15 +35,23 @@
             <PrivateRoute exact path="/admin" component={ Admin } />
             <PrivateRoute exact path="/about" component={ About } />
             <PrivateRoute exact path="/logout" component={ Logout } />
+
+            <PrivateRoute exact path="/userscontrol" component={ UsersControl } />
+            <PrivateRoute exact path="/userscontrol/add" component={AddUser} />
+            <PrivateRoute exact path="/userscontrol/edit/:id" component={EditUser} />
+             <PrivateRoute exact path="/userscontrol/:id" component={User} />
+
             <Route path="*" component={ NoMatch } />
           </Switch>
         </BrowserRouter>
       );
     }
-  
+
     const PrivateRoute = ({component: Component, path, ...rest}) => {
       let isAuthenticated = false;
-      if(localStorage.getItem("token") == "fkcnewproject")  {
+      let token = JSON.parse(localStorage.getItem("data"));
+
+      if(token !=null && token['token'] == "fkcnewproject")  {
         isAuthenticated = true;
       }
 

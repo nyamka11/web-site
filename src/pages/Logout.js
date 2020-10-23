@@ -19,10 +19,7 @@ const Logout = () => {
     // const [isLogOut, setIsLogOut] = useState(false);
     // sendData("users/logout", "", function(response)  {
     //     // console.log(response);
-        localStorage.removeItem("token");
-        localStorage.removeItem("userId");
-        localStorage.removeItem("name");
-        localStorage.removeItem("userName");
+        localStorage.removeItem("data");
         return <Redirect to="/" />;
         // setIsLogOut(true);
     // });

@@ -1,23 +1,11 @@
 
 import  React, { useState  } from 'react';
-// import { Link , Redirect } from 'react-router-dom';
 import { Breadcrumb } from 'react-bootstrap';
 import  Navbar  from '../components/common/Navbar.js';
 import  Footer  from '../components/common/Footer.js';
-import  Alert  from '../components/common/Alert.js';
-
 import { BrowserRouter as Redirect } from 'react-router-dom';
 
 const About = () => {
-    const token = localStorage.getItem("token");
-    let loggedIn = true;
-    if(token == null)  {
-        loggedIn = false;
-    }
-
-    const [isLogin, setIsLogin] = useState(loggedIn);
- 
-    if(!isLogin) return <Redirect to="/" />
     return (
         <div>
            <Navbar />
