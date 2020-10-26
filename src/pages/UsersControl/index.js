@@ -4,7 +4,6 @@ import { Link } from "react-router-dom";
 import  NavbarComponent  from '../../components/common/Navbar.js';
 import  Footer  from '../../components/common/Footer.js';
 import Constants from "../../common/constant";
-import ReactPaginate from 'react-paginate';
 import BootstrapTable from 'react-bootstrap-table-next';
 import paginationFactory from 'react-bootstrap-table2-paginator';
 
@@ -26,7 +25,6 @@ const UsersComponent = () => {
     };
 
     const actionFormat = (cell, row) => {
-        console.log(cell, row);
         return (
           <div>
             <Link className="btn btn-primary mr-2" to={`/userscontrol/${row.id}`}>View</Link>
@@ -34,10 +32,6 @@ const UsersComponent = () => {
             <button className="btn btn-danger" onClick={() => deleteUser(row.id)}>Delete</button>
           </div>
         );
-    };
-
-    const handleModelEdit = () => {
-        console.log("clicked");
     };
 
     const columns = [{

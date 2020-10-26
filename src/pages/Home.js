@@ -1,5 +1,4 @@
 import  React, { useState  } from 'react';
-import { Admin } from 'react-admin';
 import { Breadcrumb } from 'react-bootstrap';
 import  NavbarComponent  from '../components/common/Navbar.js';
 import  Footer  from '../components/common/Footer.js';
@@ -11,10 +10,10 @@ const Home = () => {
            <NavbarComponent />
             {/* body */}
             <div className="container pt-5">
-                <div class="mt-5">
+                <div className="mt-5">
                     <h2>Member list</h2>
                     <p>The .table class adds basic styling (light padding and only horizontal dividers) to a table:</p>            
-                    <table class="table">
+                    <table className="table">
                         <thead>
                         <tr>
                             <th>Firstname</th>
