@@ -13,10 +13,12 @@ const User = () => {
     phone: "",
     webiste: ""
   });
+
   const { id } = useParams();
   useEffect(() => {
     loadUser();
   }, []);
+
   const loadUser = async () => {
     const res = await axios.get(`${Constants.backEndURL}/Users/view/${id}`);
     setUser(res.data.data);

@@ -4,9 +4,38 @@ import { Link } from "react-router-dom";
 import  NavbarComponent  from '../../components/common/Navbar.js';
 import  Footer  from '../../components/common/Footer.js';
 import Constants from "../../common/constant";
+import ReactPaginate from 'react-paginate';
 
 const UsersComponent = () => {
+  const [offset, setOffset] = useState(0);
   const [users, setUser] = useState([]);
+  const [orgtableData, setOrgtableData] = useState([]);
+  const [perPage, setPerPage] = useState(9);
+  const [currentPage, setCurrentPage] = useState(0);
+  const [pageCount, setPageCount] = useState(0);
+
+  const deleteUser = async id => {
+    await axios.delete(`${Constants.backEndURL}/Users/delete/${id}`);
+    loadUsers();
+  };
+
+  const handlePageClick = (e) =>  {
+    const selectedPage = e.selected;
+    const offset = selectedPage * perPage;
+    setCurrentPage(selectedPage);
+    setOffset(offset);
+  };
+
+  const loadMoreData = () =>  {
+    const data = orgtableData;
+    const slice = data.slice(offset, offset + perPage);
+    setPageCount(Math.ceil(data.length / perPage));
+    setUser(slice);
+  };
+
+  useEffect(() => {
+    loadMoreData();
+  }, [offset]);
 
   useEffect(() => {
     loadUsers();
@@ -14,36 +43,42 @@ const UsersComponent = () => {
 
   const loadUsers = async () => {
     const result = await axios.get(Constants.backEndURL+"/Users");
-    setUser(result.data.data.reverse());
-    console.log(result.data.data.reverse());
-  };
+    var data = result.data.data.reverse();
+    var slice = data.slice(offset, offset + perPage);
 
-  const deleteUser = async id => {
-    await axios.delete(`${Constants.backEndURL}/Users/delete/${id}`);
-    loadUsers();
+    setPageCount(Math.ceil(data.length / perPage));
+    setOrgtableData(result.data.data);
+    setUser(slice);
   };
 
   return (
     <div>
         <NavbarComponent />
         <div className="container pt-5 pb-5"><br/>
-            <h1>Users</h1>
-            <Link className="btn btn-outline-success mb-2" to="/userscontrol/add">Add User</Link>
+            <div className="row mt-5 mb-3">
+              <div className="col-6">
+                <h1>Users list</h1>
+              </div>
+              <div className="col-6">
+                <Link className="btn btn-success mb-2 float-right" to="/userscontrol/add">+ Add User</Link>
+              </div>
+            </div>
+
             <table className="table border shadow">
             <thead className="thead-dark">
                 <tr>
-                <th scope="col">#</th>
-                <th scope="col">Name</th>
-                <th scope="col">User Name</th>
-                <th scope="col">Email</th>
-                <th scope="col">Phone</th>
-                <th>Action</th>
+                  <th scope="col">id</th>
+                  <th scope="col">Name</th>
+                  <th scope="col">User Name</th>
+                  <th scope="col">Email</th>
+                  <th scope="col">Phone</th>
+                  <th>Action</th>
                 </tr>
             </thead>
             <tbody>
                 {users.map((user, index) => (
                 <tr key={index + 1}>
-                    <th scope="row">{index + 1}</th>
+                    <td><b>{user.id} </b></td>
                     <td>{user.name}</td>
                     <td>{user.username}</td>
                     <td>{user.email}</td>
@@ -57,6 +92,18 @@ const UsersComponent = () => {
                 ))}
             </tbody>
             </table>
+            <ReactPaginate
+              previousLabel={"prev"}
+              nextLabel={"next"}
+              breakLabel={"..."}
+              breakClassName={"break-me"}
+              pageCount={pageCount}
+              marginPagesDisplayed={3}
+              pageRangeDisplayed={5}
+              onPageChange={handlePageClick}
+              containerClassName={"pagination"}
+              subContainerClassName={"pages pagination"}
+              activeClassName={"active"}/>
         </div>
         <Footer />
     </div>

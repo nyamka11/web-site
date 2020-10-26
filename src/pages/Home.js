@@ -1,52 +1,119 @@
-
-import  React, { useState  } from 'react';
-import { Admin } from 'react-admin';
-import { Breadcrumb } from 'react-bootstrap';
+import React, { PureComponent } from 'react'
+import axios from 'axios';
+import ReactPaginate from 'react-paginate';
 import  NavbarComponent  from '../components/common/Navbar.js';
 import  Footer  from '../components/common/Footer.js';
-import { BrowserRouter as Redirect } from 'react-router-dom';
+    
+export class FirstComponents extends PureComponent {
 
-const Home = () => {
+    constructor(props) {
+        super(props)
+    
+        this.state = {
+            offset: 0,
+            tableData: [],
+            orgtableData: [],
+            perPage: 13,
+            currentPage: 0
+        }
+        this.handlePageClick = this.handlePageClick.bind(this);
+    }
 
-    return (
-        <div>
-           <NavbarComponent />
-            {/* body */}
-            <div className="container pt-5">
-                <div className="mt-5">
-                    <h2>Member list</h2>
-                    <p>The .table class adds basic styling (light padding and only horizontal dividers) to a table:</p>            
-                    <table className="table">
+    handlePageClick = (e) => {
+        const selectedPage = e.selected;
+        const offset = selectedPage * this.state.perPage;
+
+        console.log(offset, selectedPage);
+
+        this.setState({
+            currentPage: selectedPage,
+            offset: offset
+        }, () => {
+            this.loadMoreData()
+        });
+
+    };
+
+    loadMoreData() {
+		const data = this.state.orgtableData;
+		
+		const slice = data.slice(this.state.offset, this.state.offset + this.state.perPage)
+        
+        console.log(this.state.offset, this.state.offset + this.state.perPage);
+        this.setState({
+			pageCount: Math.ceil(data.length / this.state.perPage),
+			tableData:slice
+		});
+    }
+
+    componentDidMount(){
+        this.getData();
+    }
+
+    getData() {
+        axios
+        .get(`https://jsonplaceholder.typicode.com/comments`)
+        .then(res => {
+            var data = res.data;
+            var slice = data.slice(this.state.offset, this.state.offset + this.state.perPage)
+            this.setState({
+                pageCount: Math.ceil(data.length / this.state.perPage),
+                orgtableData :res.data,
+                tableData:slice
+            })
+        });
+    }
+
+    render() {
+        return (
+            <div>
+                <NavbarComponent />
+                <div className="container pt-5 mt-5">
+                    <table border="1">
                         <thead>
-                        <tr>
-                            <th>Firstname</th>
-                            <th>Lastname</th>
+                            <th>Id</th>
+                            <th>Name</th>
                             <th>Email</th>
-                        </tr>
+                            <th>Body</th>
+
                         </thead>
                         <tbody>
-                        <tr>
-                            <td>John</td>
-                            <td>Doe</td>
-                            <td>john@example.com</td>
-                        </tr>
-                        <tr>
-                            <td>Mary</td>
-                            <td>Moe</td>
-                            <td>mary@example.com</td>
-                        </tr>
-                        <tr>
-                            <td>July</td>
-                            <td>Dooley</td>
-                            <td>july@example.com</td>
-                        </tr>
+                            {
+                            this.state.tableData.map((tdata, i) => (
+                                    <tr>
+                                        <td>{tdata.id}</td>
+                                        <td>{tdata.name}</td>
+                                        <td>{tdata.email}</td>
+                                        <td>{tdata.body}</td>
+                                    </tr>
+                                
+                            ))
+                            }
+
                         </tbody>
-                    </table>
+                    </table>  
+
+                    <ReactPaginate
+                        previousLabel={"prev"}
+                        nextLabel={"next"}
+                        breakLabel={"..."}
+                        breakClassName={"break-me"}
+                        pageCount={this.state.pageCount}
+                        marginPagesDisplayed={2}
+                        pageRangeDisplayed={5}
+                        onPageChange={this.handlePageClick}
+                        containerClassName={"pagination"}
+                        subContainerClassName={"pages pagination"}
+                        activeClassName={"active"}/>
                 </div>
+                <Footer />
             </div>
-            <Footer />
-        </div>
-    );
+        )
+    }
 }
 
-export default Home;
+export default FirstComponents
+
+
+
+

@@ -25,7 +25,6 @@ const EditUser = () => {
   }, []);
 
   const onSubmit = async e => {
-    console.log("edit task", user);
     e.preventDefault();
     await axios.put(`${Constants.backEndURL}/Users/edit/${id}`, user);
     history.push("/UsersControl");

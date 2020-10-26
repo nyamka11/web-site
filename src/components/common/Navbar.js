@@ -20,7 +20,7 @@ export const NavbarComponent = () => {
 
                     <Nav>
                         <NavDropdown title={ name } id="collasible-nav-dropdown">
-                            <NavDropdown.Item href="UsersControl">User control</NavDropdown.Item>
+                            <NavDropdown.Item href="/UsersControl">User control</NavDropdown.Item>
                             <NavDropdown.Item href="#action/3.2">Account control</NavDropdown.Item>
                             <NavDropdown.Divider />
                             <NavDropdown.Item href="/logout">Logout</NavDropdown.Item>

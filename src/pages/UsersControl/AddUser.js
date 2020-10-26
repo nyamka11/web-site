@@ -8,6 +8,7 @@ import Constants from "../../common/constant";
 const AddUser = () => {
   let history = useHistory();
   const [user, setUser] = useState({
+    comId: JSON.parse(localStorage.getItem("data"))['comId'],
     name: "",
     username: "",
     email: "",
@@ -20,6 +21,7 @@ const AddUser = () => {
   };
 
   const onSubmit = async e => {
+    console.log(user);
     e.preventDefault();
     await axios.post(Constants.backEndURL+"/Users/add", user);
     history.push("/userscontrol");

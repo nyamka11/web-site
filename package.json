@@ -18,6 +18,7 @@
     "react-dom": "^16.10.1",
     "react-native-maps": "^0.27.1",
     "react-notifications-component": "^2.4.0",
+    "react-paginate": "^6.5.0",
     "react-private-route": "^1.1.2",
     "react-progress-button": "^5.1.0",
     "react-router-dom": "^5.2.0",
