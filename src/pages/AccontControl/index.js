@@ -7,7 +7,7 @@ import Constants from "../../common/constant";
 import BootstrapTable from 'react-bootstrap-table-next';
 import paginationFactory from 'react-bootstrap-table2-paginator';
 
-const UsersComponent = () => {
+const AccountComponent = () => {
    const [users, setUser] = useState([]);
 
     useEffect(() =>  {
@@ -94,4 +94,4 @@ const UsersComponent = () => {
     );
 };
 
-export default UsersComponent;
+export default AccountComponent;

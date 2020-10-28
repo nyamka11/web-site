@@ -20,6 +20,8 @@
     import EditUser from "./pages/UsersControl/EditUser";
     import User from "./pages/UsersControl/User";
 
+    import AccontControl from './pages/AccontControl';
+    
     import NoMatch  from './pages/NoMatch';
 
     function App() {
@@ -39,7 +41,9 @@
             <PrivateRoute exact path="/userscontrol" component={ UsersControl } />
             <PrivateRoute exact path="/userscontrol/add" component={AddUser} />
             <PrivateRoute exact path="/userscontrol/edit/:id" component={EditUser} />
-             <PrivateRoute exact path="/userscontrol/:id" component={User} />
+            <PrivateRoute exact path="/userscontrol/:id" component={User} />
+
+            <PrivateRoute exact path="/accountcontrol" component={ AccontControl } />
 
             <Route path="*" component={ NoMatch } />
           </Switch>

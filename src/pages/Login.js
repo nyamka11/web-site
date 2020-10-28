@@ -45,9 +45,8 @@ const Login = (props) =>  {
                 if(responce.data.res.status)  {
                     localStorage.setItem("data", JSON.stringify({
                         "token":  "fkcnewproject",
-                        "comId": responce.data.res.data.company_id,
-                        "userId": responce.data.res.data.id,
-                        "name": responce.data.res.data.name,
+                        "comId": responce.data.res.data.com_id,
+                        "userId": responce.data.res.data.user_id,
                         "userName": responce.data.res.data.username
                     }));
 
@@ -70,7 +69,7 @@ const Login = (props) =>  {
 
         setIsLoading(true);
         setData({
-            url: "users/login" , 
+            url: "account/login" , 
             data: "&username=" + username + "&password=" + password 
         });
     };

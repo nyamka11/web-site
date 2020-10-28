@@ -1,4 +1,4 @@
-import  React, { useState  } from 'react';
+import  React, { useEffect, useState  } from 'react';
 import { Redirect, Link } from 'react-router-dom'
 import axios from 'axios';
 
@@ -7,7 +7,6 @@ const sendData = (url, data, onSuccess) => {
     const proxyurl = "https://cors-anywhere.herokuapp.com/";
     axios.post(basicURL+url, data)
     .then(response => {
-        console.log(response);
         onSuccess(response);
     })
     .catch(error => {
@@ -16,13 +15,21 @@ const sendData = (url, data, onSuccess) => {
 }
 
 const Logout = () => {
-    // const [isLogOut, setIsLogOut] = useState(false);
-    // sendData("users/logout", "", function(response)  {
-    //     // console.log(response);
+    const [isLogOut, setIsLogOut] = useState(false);
+
+    useEffect(() => {
+        sendData("account/logout", "", function(response)  {
+            console.log(response);
+            setIsLogOut(true);
+        });
+    }, []);
+
+    useEffect(() => {
         localStorage.removeItem("data");
-        return <Redirect to="/" />;
-        // setIsLogOut(true);
-    // });
+    }, [isLogOut]);
+
+    if(isLogOut) return <Redirect to="/" />;
+    return false;
 }
 
 export default Logout;

@@ -79,7 +79,7 @@
                 email !='' && validateMail(email)
             )  {
                 setIsLoading(true);
-                sendData("users/register", data, function(response)  {
+                sendData("company/add", data, function(response)  {
                     let responce = response.data.res;
                     if(responce.status == 0)  {
                         setAlert({ 
