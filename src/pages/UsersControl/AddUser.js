@@ -21,7 +21,6 @@ const AddUser = () => {
   };
 
   const onSubmit = async e => {
-    console.log(user);
     e.preventDefault();
     await axios.post(Constants.backEndURL+"/Users/add", user);
     history.push("/userscontrol");
