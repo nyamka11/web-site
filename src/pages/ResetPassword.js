@@ -24,7 +24,7 @@ const ResetPassword = (props) => {
         const urlParams = new URLSearchParams(window.location.search);
         const mytoken = urlParams.get('mt');
 
-        sendData("users/resetpassword", "&password="+password+"&token="+mytoken, function(response)  {
+        sendData("account/resetpassword", "&password="+password+"&token="+mytoken, function(response)  {
             window.location.replace('http://localhost:3000');
         });
     }

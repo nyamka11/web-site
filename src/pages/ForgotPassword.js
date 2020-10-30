@@ -22,7 +22,7 @@ const ForgetPassword = () => {
     }
 
     const onClick = () => {
-        sendData("users/forgotpassword", "&email="+email, function(response)  {
+        sendData("account/forgotpassword", "&email="+email, function(response)  {
             let responce = response.data.res;
             setResMsg(responce.msg);
         });
