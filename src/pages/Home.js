@@ -1,48 +1,23 @@
 
 import  React, { useState  } from 'react';
-import { Admin } from 'react-admin';
 import { Breadcrumb } from 'react-bootstrap';
 import  NavbarComponent  from '../components/common/Navbar.js';
 import  Footer  from '../components/common/Footer.js';
 import { BrowserRouter as Redirect } from 'react-router-dom';
 
 const Home = () => {
-
     return (
         <div>
            <NavbarComponent />
+           <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css"
+            integrity="sha512-xodZBNTC5n17Xt2atTPuE1HxjVMSvLVW9ocqUKLsCC5CXdbqCmblAshOMAS6/keqq/sMZMZ19scR4PsZChSR7A=="
+            crossorigin=""/>
+            <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"
+            integrity="sha512-XQoYMqMTK8LvdxXYG3nZ448hOEQiglfqkJs1NOQV44cWnUrBc8PkAOcXy20w0vlaXaVUearIOBhiXZ5V3ynxwA=="
+            crossorigin=""></script>
             {/* body */}
             <div className="container pt-5">
-                <div className="mt-5">
-                    <h2>Member list</h2>
-                    <p>The .table class adds basic styling (light padding and only horizontal dividers) to a table:</p>            
-                    <table className="table">
-                        <thead>
-                        <tr>
-                            <th>Firstname</th>
-                            <th>Lastname</th>
-                            <th>Email</th>
-                        </tr>
-                        </thead>
-                        <tbody>
-                        <tr>
-                            <td>John</td>
-                            <td>Doe</td>
-                            <td>john@example.com</td>
-                        </tr>
-                        <tr>
-                            <td>Mary</td>
-                            <td>Moe</td>
-                            <td>mary@example.com</td>
-                        </tr>
-                        <tr>
-                            <td>July</td>
-                            <td>Dooley</td>
-                            <td>july@example.com</td>
-                        </tr>
-                        </tbody>
-                    </table>
-                </div>
+                asdf
             </div>
             <Footer />
         </div>

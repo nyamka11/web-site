@@ -1,12 +1,11 @@
 import  React, { useState  } from 'react'; 
 import axios from 'axios';
+import Constants from "../common/constant";
 
 const ResetPassword = (props) => {
     const [password, setPassword] = useState("");
-
-    const basicURL = "http://127.0.0.1/backEnd/";
     const sendData = (url, data, onSuccess) => {
-        axios.post(basicURL+url, data)
+        axios.post(Constants.backEndURL + url, data)
         .then(response => {
             console.log(response);
             onSuccess(response);

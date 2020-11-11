@@ -1,11 +1,10 @@
 import  React, { useState  } from 'react';
 import { Redirect, Link } from 'react-router-dom'
 import axios from 'axios';
+import Constants from "../common/constant";
 
 const sendData = (url, data, onSuccess) => {
-    const basicURL = "http://127.0.0.1/backEnd/";
-    const proxyurl = "https://cors-anywhere.herokuapp.com/";
-    axios.post(basicURL+url, data)
+    axios.post(Constants.backEndURL + url, data)
     .then(response => {
         console.log(response);
         onSuccess(response);

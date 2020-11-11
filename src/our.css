@@ -34,3 +34,16 @@ footer {
     margin: -10px 20px 0px 0px;
     text-align: center;
 } */
+
+.spinner-grow {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+}
+
+.mainContainer  {
+    min-height: 847px;
+}

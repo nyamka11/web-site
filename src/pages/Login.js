@@ -18,9 +18,9 @@ import Delete from '../common/Fiware/Delete';
 import Select from '../common/Fiware/Select';
 import Update from '../common/Fiware/Update';
 import Search from "../common/Fiware/Search";
+import Constants from "../common/constant";
 
 const Login = (props) =>  {
-    const basicURL = "http://127.0.0.1/backEnd/";
     const [username, setUsername] = useState("");
     const [password, setPassword] = useState("");
     const [loggedIn, setLoggedIn] = useState(false);
@@ -37,10 +37,9 @@ const Login = (props) =>  {
     };
 
     useEffect(() => {
-        const proxyurl = "https://cors-anywhere.herokuapp.com/";
         console.log(data.url, data.data);
         if(isLoading)  {
-            axios.post(basicURL + data.url, data.data).then((responce) => {
+            axios.post(Constants.backEndURL + data.url, data.data).then((responce) => {
                 console.log(responce);
                 if(responce.data.res.status)  {
                     localStorage.setItem("data", JSON.stringify({
@@ -48,7 +47,8 @@ const Login = (props) =>  {
                         "comId": responce.data.res.data.company_id,
                         "userId": responce.data.res.data.id,
                         "name": responce.data.res.data.name,
-                        "userName": responce.data.res.data.username
+                        "userName": responce.data.res.data.username,
+                        "level": responce.data.res.data.level
                     }));
 
                     setLoggedIn(true);
@@ -70,7 +70,7 @@ const Login = (props) =>  {
 
         setIsLoading(true);
         setData({
-            url: "users/login" , 
+            url: "/users/login" , 
             data: "&username=" + username + "&password=" + password 
         });
     };
