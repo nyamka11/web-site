@@ -35,7 +35,7 @@ const Register = () =>  {
         }
 
         setIsLoading(true);
-        await axios.post(Constants.backEndURL+"/backEnd/Company/add", userData).then(response => { 
+        await axios.post(Constants.backEndURL+"/users/register", userData).then(response => { 
             let responce = response.data.res;
             if(responce.status == 0)  {
                 setAlert({ 

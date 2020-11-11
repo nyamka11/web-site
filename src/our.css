@@ -35,6 +35,7 @@ footer {
     text-align: center;
 } */
 
+<<<<<<< HEAD
 .pagination {
     margin: 15px auto;
     display: flex;
@@ -63,3 +64,17 @@ footer {
   .pagination > li:first-child > a, .pagination > li:first-child > span, .pagination > li:last-child > a, .pagination > li:last-child > span{
     border-radius: unset
   }
+=======
+.spinner-grow {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+}
+
+.mainContainer  {
+    min-height: 847px;
+}
+>>>>>>> develop

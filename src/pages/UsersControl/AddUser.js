@@ -6,32 +6,49 @@ import  Footer  from '../../components/common/Footer.js';
 import Constants from "../../common/constant";
 
 const AddUser = () => {
+
+  let localData = JSON.parse(localStorage.getItem("data"));
+  let myComId = localData['comId'];
+  let authorId = localData['userId'];
+
   let history = useHistory();
+  const [msg, setMsg] = useState("");
   const [user, setUser] = useState({
     comId: JSON.parse(localStorage.getItem("data"))['comId'],
     name: "",
     username: "",
     email: "",
-    phone: ""
+    phone: "",
+    comId: myComId,
+    authorId: authorId
   });
 
   const { name, username, email, phone } = user;
+  console.log(user);
   const onInputChange = e => {
     setUser({ ...user, [e.target.name]: e.target.value });
   };
 
   const onSubmit = async e => {
     e.preventDefault();
-    await axios.post(Constants.backEndURL+"/Users/add", user);
-    history.push("/userscontrol");
+    let data = await axios.post(Constants.backEndURL+"/Users/add", user);
+    if(data.data.res.status == 0)  {
+      setMsg(data.data.res.msg);
+    }
+
+    if(data.data.res.status == 1)  {
+      setMsg(data.data.res.msg);
+      history.push("/userscontrol");
+    }
   };
 
   return (
     <div>
       <NavbarComponent />
-      <div className="container pt-5 pb-5"><br/>
+      <div className="container pt-5 pb-5 mainContainer"><br/>
         <div className="w-75 mx-auto shadow p-5">
-          <h2 className="text-center mb-4">Add A User</h2>
+          <h2 className="text-center mb-4">Add User</h2>
+          { msg !="" ? <div className="alert alert-danger" role="alert">{msg}</div> : "" }
           <form onSubmit={e => onSubmit(e)}>
             <div className="form-group">
               <input
