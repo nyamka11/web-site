@@ -2,7 +2,7 @@ import  React, { useState  } from 'react';
 import  NavbarComponent  from '../components/common/Navbar.js';
 import  Footer  from '../components/common/Footer.js';
 import leaflet from 'leaflet';
-import { MapContainer, TileLayer, Marker, Popup, Polyline, Circle, CircleMarker, Polygon, Rectangle } from 'react-leaflet';
+import { MapContainer, TileLayer, Marker, Popup, Polyline, Circle, CircleMarker, Polygon, ImageOverlay } from 'react-leaflet';
 import pointer from '../assets/pointer.svg';
 import bluePointer from '../assets/bluePointer.svg';
 import * as parkData from "../data/skateboard-parks.json";
@@ -24,9 +24,6 @@ const Home = () => {
         [34.690039, 137.747250]
       ]
     ]
-    
-    const purpleOptions = { color: 'purple' }
-
 
     return (
         <div>
@@ -45,6 +42,11 @@ const Home = () => {
                             park.geometry.coordinates[0]
                         ]}
                         icon={icon}
+                        eventHandlers={{
+                            click: () => {
+                              console.log('marker clicked')
+                            },
+                        }}
                     >
                         <Popup>
                         <div>
@@ -58,16 +60,30 @@ const Home = () => {
                     </Marker>
                 ))}
 
-                <Polygon pathOptions={purpleOptions} positions={multiPolygon} >
+                <Polygon pathOptions={{color: "purple"}} positions={multiPolygon} >
                     <Popup>
                         <div>
-                            <h1>abunai zone</h1>
+                            <h1>危ない場所</h1>
                             <p>asdfasdf</p>
                         
                         </div>
                         </Popup>
                 </Polygon>
+
+                <Circle pathOptions={{color:"green"}}  center={[34.690604, 137.702846]} radius={800} >
+                    <Popup>
+                        <div>
+                            <h1>安全場所</h1>
+                            <p>asdfasdf</p>
+                        
+                        </div>
+                    </Popup>
+                </Circle>
+                    
             </MapContainer>
+            <div>
+                asdf
+            </div>
             <Footer />
         </div>
     );
