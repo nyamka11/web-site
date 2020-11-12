@@ -1,23 +1,73 @@
 import  React, { useState  } from 'react';
-import { Breadcrumb } from 'react-bootstrap';
 import  NavbarComponent  from '../components/common/Navbar.js';
 import  Footer  from '../components/common/Footer.js';
-import { BrowserRouter as Redirect } from 'react-router-dom';
+import leaflet from 'leaflet';
+import { MapContainer, TileLayer, Marker, Popup, Polyline, Circle, CircleMarker, Polygon, Rectangle } from 'react-leaflet';
+import pointer from '../assets/pointer.svg';
+import bluePointer from '../assets/bluePointer.svg';
+import * as parkData from "../data/skateboard-parks.json";
+
 
 const Home = () => {
+    const icon = leaflet.icon({
+        iconUrl: bluePointer,
+        iconSize: [50, 50]
+    });
+
+    const center = [51.505, -0.09]
+    const multiPolygon = [
+      [
+        [34.686581, 137.740814],
+        [34.685664, 137.736256],
+        [34.679523, 137.740808],
+        [34.680088, 137.749654],
+        [34.690039, 137.747250]
+      ]
+    ]
+    
+    const purpleOptions = { color: 'purple' }
+
+
     return (
         <div>
-           <NavbarComponent />
-           <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css"
-            integrity="sha512-xodZBNTC5n17Xt2atTPuE1HxjVMSvLVW9ocqUKLsCC5CXdbqCmblAshOMAS6/keqq/sMZMZ19scR4PsZChSR7A=="
-            crossorigin=""/>
-            <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"
-            integrity="sha512-XQoYMqMTK8LvdxXYG3nZ448hOEQiglfqkJs1NOQV44cWnUrBc8PkAOcXy20w0vlaXaVUearIOBhiXZ5V3ynxwA=="
-            crossorigin=""></script>
-            {/* body */}
-            <div className="container pt-5">
-                asdf
-            </div>
+            <NavbarComponent />
+            <MapContainer className="map mt-5 pt-5" center={[34.707469, 137.726222]} zoom={15}>
+                <TileLayer
+                    attribution='&amp;copy <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
+                    url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
+                />
+                {parkData.features.map(park => (
+
+                    <Marker
+                        key={park.properties.PARK_ID}
+                        position={[
+                            park.geometry.coordinates[1],
+                            park.geometry.coordinates[0]
+                        ]}
+                        icon={icon}
+                    >
+                        <Popup>
+                        <div>
+                            <h4>{park.properties.NAME}</h4>
+                            <p>{park.properties.NAME_FR}</p>
+                            <p>{park.properties.ADDRESS}</p>
+                            <p>{park.properties.ADDRESS_FR}</p>
+                            <p>{park.properties.DESCRIPTIO}</p>
+                        </div>
+                        </Popup>
+                    </Marker>
+                ))}
+
+                <Polygon pathOptions={purpleOptions} positions={multiPolygon} >
+                    <Popup>
+                        <div>
+                            <h1>abunai zone</h1>
+                            <p>asdfasdf</p>
+                        
+                        </div>
+                        </Popup>
+                </Polygon>
+            </MapContainer>
             <Footer />
         </div>
     );
