@@ -27,8 +27,30 @@ const Home = () => {
     ]
 
     useEffect(() => {
-        const ctx = document.getElementById("myChart");
-        new Chart(ctx, {
+        new Chart(document.getElementById("myChart"), {
+            type: "bar",
+            data: {
+                labels: ["Red", "Blue", "Yellow", "Green", "Purple", "Orange"],
+                datasets: [
+                {
+                    label: "# of Votes",
+                    data: [12, 19, 3, 5, 2, 3],
+                    backgroundColor: [
+                        "Red",
+                        "Blue",
+                        "Yellow",
+                        "Green",
+                        "Purple",
+                        "Orange"
+                    ],
+                    borderColor: ["Red", "Blue", "Yellow", "Green", "Purple", "Orange"],
+                    borderWidth: 1
+                }
+                ]
+            }
+        });
+
+        new Chart(document.getElementById("myChart1"), {
             type: "pie",
             data: {
                 labels: ["Red", "Blue", "Yellow", "Green", "Purple", "Orange"],
@@ -37,12 +59,12 @@ const Home = () => {
                     label: "# of Votes",
                     data: [12, 19, 3, 5, 2, 3],
                     backgroundColor: [
-                    "Red",
-                    "Blue",
-                    "Yellow",
-                    "Green",
-                    "Purple",
-                    "Orange"
+                        "Red",
+                        "Blue",
+                        "Yellow",
+                        "Green",
+                        "Purple",
+                        "Orange"
                     ],
                     borderColor: ["Red", "Blue", "Yellow", "Green", "Purple", "Orange"],
                     borderWidth: 1
@@ -55,61 +77,68 @@ const Home = () => {
     return (
         <div>
             <NavbarComponent />
-            <MapContainer className="map mt-5 pt-5" center={[34.707469, 137.726222]} zoom={15}>
-                <TileLayer
-                    attribution='&amp;copy <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
-                    url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
-                />
-                {parkData.features.map(park => (
+            <div className="row mt-5">
+                <div className="col-8">
+                    <MapContainer className="map border" center={[34.707469, 137.726222]} zoom={15}>
+                        <TileLayer
+                            attribution='&amp;copy <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
+                            url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
+                        />
+                        {parkData.features.map(park => (
 
-                    <Marker
-                        key={park.properties.PARK_ID}
-                        position={[
-                            park.geometry.coordinates[1],
-                            park.geometry.coordinates[0]
-                        ]}
-                        icon={icon}
-                        eventHandlers={{
-                            click: () => {
-                              console.log('marker clicked')
-                            },
-                        }}
-                    >
-                        <Popup>
-                        <div>
-                            <h4>{park.properties.NAME}</h4>
-                            <p>{park.properties.NAME_FR}</p>
-                            <p>{park.properties.ADDRESS}</p>
-                            <p>{park.properties.ADDRESS_FR}</p>
-                            <p>{park.properties.DESCRIPTIO}</p>
-                        </div>
-                        </Popup>
-                    </Marker>
-                ))}
+                            <Marker
+                                key={park.properties.PARK_ID}
+                                position={[
+                                    park.geometry.coordinates[1],
+                                    park.geometry.coordinates[0]
+                                ]}
+                                icon={icon}
+                                eventHandlers={{
+                                    click: () => {
+                                    console.log('marker clicked')
+                                    },
+                                }}
+                            >
+                                <Popup>
+                                <div>
+                                    <h4>{park.properties.NAME}</h4>
+                                    <p>{park.properties.NAME_FR}</p>
+                                    <p>{park.properties.ADDRESS}</p>
+                                    <p>{park.properties.ADDRESS_FR}</p>
+                                    <p>{park.properties.DESCRIPTIO}</p>
+                                </div>
+                                </Popup>
+                            </Marker>
+                        ))}
 
-                <Polygon pathOptions={{color: "purple"}} positions={multiPolygon} >
-                    <Popup>
-                        <div>
-                            <h1>危ない場所</h1>
-                            <p>asdfasdf</p>
-                        
-                        </div>
-                        </Popup>
-                </Polygon>
+                        <Polygon pathOptions={{color: "purple"}} positions={multiPolygon} >
+                            <Popup>
+                                <div>
+                                    <h1>危ない場所</h1>
+                                    <p>asdfasdf</p>
+                                
+                                </div>
+                                </Popup>
+                        </Polygon>
 
-                <Circle pathOptions={{color:"green"}}  center={[34.690604, 137.702846]} radius={800} >
-                    <Popup>
-                        <div>
-                            <h1>安全場所</h1>
-                            <p>asdfasdf</p>
-                        
-                        </div>
-                    </Popup>
-                </Circle>
+                        <Circle pathOptions={{color:"green"}}  center={[34.690604, 137.702846]} radius={800} >
+                            <Popup>
+                                <div>
+                                    <h1>安全場所</h1>
+                                    <p>asdfasdf</p>
+                                
+                                </div>
+                            </Popup>
+                        </Circle>
+                    </MapContainer>
+                </div>
+                <div className="col-4">
+                    <div className="row m-3">
+                        <div className="col-6"><canvas id="myChart" width="400" height="400" /></div>
+                        <div className="col-6"><canvas id="myChart1" width="400" height="400" /></div>
+                    </div>
                     
-            </MapContainer>
-            <div>
-                <canvas id="myChart" width="400" height="400" />
+                </div>
             </div>
             <Footer />
         </div>
