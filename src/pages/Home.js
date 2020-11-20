@@ -95,7 +95,7 @@ const Home = () => {
                                 icon={icon}
                                 eventHandlers={{
                                     click: () => {
-                                    console.log('marker clicked')
+                                        console.log(park.properties);
                                     },
                                 }}
                             >
