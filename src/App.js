@@ -1,8 +1,8 @@
 
-    import React, { Component } from 'react';
-    import  {BrowserRouter, Redirect, Route, Switch ,Link } from "react-router-dom";
-    import { ProtectedRoute } from "./protected.route";
-    import Constants from "./common/constant";
+    import React from 'react';
+    import  {BrowserRouter, Redirect, Route, Switch } from "react-router-dom";
+    // import { ProtectedRoute } from "./protected.route";
+    // import Constants from "./common/constant";
 
     import Register from './pages/Register';
     import Login from './pages/Login';
@@ -50,7 +50,7 @@
       let isAuthenticated = false;
       let token = JSON.parse(localStorage.getItem("data"));
 
-      if(token !=null && token['token'] == "fkcnewproject")  {
+      if(token !=null && token['token'] === "fkcnewproject")  {
         isAuthenticated = true;
       }
 

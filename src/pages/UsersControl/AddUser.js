@@ -14,7 +14,6 @@ const AddUser = () => {
   let history = useHistory();
   const [msg, setMsg] = useState("");
   const [user, setUser] = useState({
-    comId: JSON.parse(localStorage.getItem("data"))['comId'],
     name: "",
     username: "",
     email: "",
@@ -32,11 +31,11 @@ const AddUser = () => {
   const onSubmit = async e => {
     e.preventDefault();
     let data = await axios.post(Constants.backEndURL+"/Users/add", user);
-    if(data.data.res.status == 0)  {
+    if(data.data.res.status === 0)  {
       setMsg(data.data.res.msg);
     }
 
-    if(data.data.res.status == 1)  {
+    if(data.data.res.status === 1)  {
       setMsg(data.data.res.msg);
       history.push("/userscontrol");
     }
@@ -48,7 +47,7 @@ const AddUser = () => {
       <div className="container pt-5 pb-5 mainContainer"><br/>
         <div className="w-75 mx-auto shadow p-5">
           <h2 className="text-center mb-4">Add User</h2>
-          { msg !="" ? <div className="alert alert-danger" role="alert">{msg}</div> : "" }
+          { msg !== "" ? <div className="alert alert-danger" role="alert">{msg}</div> : "" }
           <form onSubmit={e => onSubmit(e)}>
             <div className="form-group">
               <input

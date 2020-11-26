@@ -1,5 +1,5 @@
 import  React, { useEffect, useState  } from 'react';
-import { Redirect, Link } from 'react-router-dom'
+import { Redirect } from 'react-router-dom'
 import axios from 'axios';
 import Constants from "../common/constant";
 

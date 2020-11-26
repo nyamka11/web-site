@@ -26,10 +26,10 @@ const Register = () =>  {
         console.log(userData);
 
         for(const property in userData)  { //Data check hiigeed hooson bwl return hiij zogsoono
-            if(userData[property] == "")  {
+            if(userData[property] === "")  {
                 return false;
             }
-            else if(property =="email" && !validateMail(email))  {  //email syntax check
+            else if(property ==="email" && !validateMail(email))  {  //email syntax check
                 return false;
             }
         }
@@ -37,13 +37,13 @@ const Register = () =>  {
         setIsLoading(true);
         await axios.post(Constants.backEndURL+"/users/register", userData).then(response => { 
             let responce = response.data.res;
-            if(responce.status == 0)  {
+            if(responce.status === 0)  {
                 setAlert({ 
                     type: "alert-danger", 
                     msg:  responce.msg
                 });
             }
-            else if(responce.status == 1)  {
+            else if(responce.status === 1)  {
                 setAlert({ 
                     type: "alert-success", 
                     msg:  responce.msg
@@ -56,7 +56,7 @@ const Register = () =>  {
     const alertMsg = (alert) =>  {
         if(alert.type !=null)  {
             window.scrollTo(0, 0);
-            if(alert.type == "alert-danger") return <div className="alert alert-danger registerAlert" role="alert">{alert.msg}</div>
+            if(alert.type === "alert-danger") return <div className="alert alert-danger registerAlert" role="alert">{alert.msg}</div>
             else  return <div className="alert alert-success registerAlert" role="alert">{alert.msg}</div>
         }
     }
@@ -81,7 +81,7 @@ const Register = () =>  {
                         value={ companyName } 
                         onChange={e => onInputChange(e)}
                     />
-                    {companyName == "" && valueCheck ? <small className="text-danger">Please enter more characters.</small> : ""}
+                    {companyName === "" && valueCheck ? <small className="text-danger">Please enter more characters.</small> : ""}
                 </div>
                 <div className="form-group">
                     <label className="form-control-label">担当者名:</label>
@@ -92,7 +92,7 @@ const Register = () =>  {
                         value={ guarantorName } 
                         onChange={e => onInputChange(e) }
                     />
-                    {guarantorName == "" && valueCheck ? <small className="text-danger">guarantorName is empty</small> : ""}
+                    {guarantorName === "" && valueCheck ? <small className="text-danger">guarantorName is empty</small> : ""}
                 </div>
                 <div className="form-group">
                     <label className="form-control-label">郵便番号:</label>
@@ -103,7 +103,7 @@ const Register = () =>  {
                         value={ postCode } 
                         onChange={e => onInputChange(e) }
                     />
-                    {postCode == "" && valueCheck ? <small className="text-danger">postCode is empty</small> : ""}
+                    {postCode === "" && valueCheck ? <small className="text-danger">postCode is empty</small> : ""}
                 </div>
                 <div className="form-group">
                     <label className="form-control-label">住所1:</label>
@@ -114,7 +114,7 @@ const Register = () =>  {
                         value={ address1 } 
                         onChange={e => onInputChange(e) }
                     />
-                    {address1 == "" && valueCheck ? <small className="text-danger">address1 is empty</small> : ""}
+                    {address1 === "" && valueCheck ? <small className="text-danger">address1 is empty</small> : ""}
                 </div>
                 <div className="form-group">
                     <label className="form-control-label">住所2:</label>
@@ -125,7 +125,7 @@ const Register = () =>  {
                         value={ address2 } 
                         onChange={e => onInputChange(e) }
                     />
-                    {address2 == "" && valueCheck ? <small className="text-danger">address2 is empty</small> : ""}
+                    {address2 === "" && valueCheck ? <small className="text-danger">address2 is empty</small> : ""}
                 </div>
                 <div className="form-group">
                     <label className="form-control-label">住所3:</label>
@@ -136,7 +136,7 @@ const Register = () =>  {
                         value={ address3 } 
                         onChange={e => onInputChange(e) }
                     />
-                    {address3 == "" && valueCheck ? <small className="text-danger">address3 is empty</small> : ""}
+                    {address3 === "" && valueCheck ? <small className="text-danger">address3 is empty</small> : ""}
                 </div>
                 <div className="form-group">
                     <label className="form-control-label">担当者電話番号:</label>
@@ -147,7 +147,7 @@ const Register = () =>  {
                         value={ guarantorPhoneNumber } 
                         onChange={e => onInputChange(e) }
                     />
-                    {guarantorPhoneNumber == "" && valueCheck ? <small className="text-danger">guarantorPhoneNumber is empty</small> : ""}
+                    {guarantorPhoneNumber === "" && valueCheck ? <small className="text-danger">guarantorPhoneNumber is empty</small> : ""}
                 </div>
                 <div className="form-group">
                     <label className="form-control-label">担当者携帯電話番号:</label>
@@ -158,7 +158,7 @@ const Register = () =>  {
                         value={ cellPhone } 
                         onChange={e => onInputChange(e) }
                     />
-                    {cellPhone == "" && valueCheck ? <small className="text-danger">cellPhone is empty</small> : ""}
+                    {cellPhone === "" && valueCheck ? <small className="text-danger">cellPhone is empty</small> : ""}
                 </div>
                 <div className="form-group">
                     <h6>メール</h6>
@@ -169,7 +169,7 @@ const Register = () =>  {
                         value={ email } 
                         onChange={e => onInputChange(e) }
                     />
-                    {email == "" && valueCheck ? <small className="text-danger">email is empty</small> : ""}
+                    {email === "" && valueCheck ? <small className="text-danger">email is empty</small> : ""}
                     {email != "" && !validateMail(email) && valueCheck ? <small className="text-danger">email syntax error</small> : ""}
                 </div>
                 <input type="button" disabled={isLoading ? true : false} value={isLoading ? "Loading..." : "Register"} onClick={e => handleSubmit(e)} className="btn btn-info btn-block mt-4" />

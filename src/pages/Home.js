@@ -1,12 +1,24 @@
-import React, { useState, useEffect } from "react";
+import React, { useEffect } from "react";
 import  NavbarComponent  from '../components/common/Navbar.js';
 import  Footer  from '../components/common/Footer.js';
 import leaflet from 'leaflet';
-import { MapContainer, TileLayer, Marker, Popup, Polyline, Circle, CircleMarker, Polygon, ImageOverlay } from 'react-leaflet';
+import { MapContainer, TileLayer, Marker, Popup, Circle, CircleMarker, Polygon, ImageOverlay } from 'react-leaflet';
 import pointer from '../assets/pointer.svg';
 import bluePointer from '../assets/bluePointer.svg';
-import * as parkData from "../data/skateboard-parks.json";
+import parkData from "../data/skateboard-parks.json";
 import Chart from "chart.js";
+
+
+// import Insert from '../common/Fiware/Insert';
+// import Delete from '../common/Fiware/Delete';
+// import Select from '../common/Fiware/Select';
+// import Update from '../common/Fiware/Update';
+// import Search from "../common/Fiware/Search";
+
+// import selectAll from "../common/Fiware/SelectAll.js";
+
+// selectAll();
+
 
 
 const Home = () => {
@@ -17,13 +29,13 @@ const Home = () => {
 
     const center = [51.505, -0.09]
     const multiPolygon = [
-      [
-        [34.686581, 137.740814],
-        [34.685664, 137.736256],
-        [34.679523, 137.740808],
-        [34.680088, 137.749654],
-        [34.690039, 137.747250]
-      ]
+        [
+            [34.686581, 137.740814],
+            [34.685664, 137.736256],
+            [34.679523, 137.740808],
+            [34.680088, 137.749654],
+            [34.690039, 137.747250]
+        ]
     ]
 
     useEffect(() => {
@@ -32,20 +44,20 @@ const Home = () => {
             data: {
                 labels: ["Red", "Blue", "Yellow", "Green", "Purple", "Orange"],
                 datasets: [
-                {
-                    label: "# of Votes",
-                    data: [12, 19, 3, 5, 2, 3],
-                    backgroundColor: [
-                        "Red",
-                        "Blue",
-                        "Yellow",
-                        "Green",
-                        "Purple",
-                        "Orange"
-                    ],
-                    borderColor: ["Red", "Blue", "Yellow", "Green", "Purple", "Orange"],
-                    borderWidth: 1
-                }
+                    {
+                        label: "# of Votes",
+                        data: [12, 19, 3, 5, 2, 3],
+                        backgroundColor: [
+                            "Red",
+                            "Blue",
+                            "Yellow",
+                            "Green",
+                            "Purple",
+                            "Orange"
+                        ],
+                        borderColor: ["Red", "Blue", "Yellow", "Green", "Purple", "Orange"],
+                        borderWidth: 1
+                    }
                 ]
             }
         });
@@ -84,8 +96,21 @@ const Home = () => {
                             attribution='&amp;copy <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
                             url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
                         />
-                        {parkData.features.map(park => (
 
+                        {/* <GeoSearchControlElement 
+                            provider={prov} 
+                            showMarker= {true} 
+                            showPopup={false} 
+                            popupFormat={({ query, result }) => result.label} 
+                            maxMarkers={3}  
+                            retainZoomLevel= {false}  
+                            animateZoom= {true} 
+                            autoClose= {false}  
+                            searchLabel={'Enter address, please'} 
+                            keepResult= {true} 
+                        /> */}
+
+                        {parkData.features.map(park => (
                             <Marker
                                 key={park.properties.PARK_ID}
                                 position={[

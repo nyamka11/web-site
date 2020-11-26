@@ -1,6 +1,5 @@
 import React from "react";
-import { Navbar, Nav, NavDropdown, DropdownButton, Dropdown } from 'react-bootstrap';
-import { Link  } from 'react-router-dom';
+import { Navbar, Nav, NavDropdown } from 'react-bootstrap';
 
 export const NavbarComponent = () => {
     let localData = JSON.parse(localStorage.getItem("data"));
@@ -22,7 +21,7 @@ export const NavbarComponent = () => {
 
                     <Nav>
                         <NavDropdown title={ name } id="collasible-nav-dropdown">
-                            {level == "admin" ?  <NavDropdown.Item href="/UsersControl">User control</NavDropdown.Item>: "" }
+                            {level === "admin" ?  <NavDropdown.Item href="/UsersControl">User control</NavDropdown.Item>: "" }
                             <NavDropdown.Divider />
                             <NavDropdown.Item href="/logout">Logout</NavDropdown.Item>
                         </NavDropdown> 

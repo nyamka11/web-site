@@ -12,12 +12,6 @@ import {
     CRow,
 } from "@coreui/react";
 import axios from "axios";
-import SelectAll from '../common/Fiware/SelectAll';
-import Insert from '../common/Fiware/Insert';
-import Delete from '../common/Fiware/Delete';
-import Select from '../common/Fiware/Select';
-import Update from '../common/Fiware/Update';
-import Search from "../common/Fiware/Search";
 import Constants from "../common/constant";
 
 const Login = (props) =>  {
@@ -63,7 +57,7 @@ const Login = (props) =>  {
 
     const handleSubmit = (event) => {
         event.preventDefault();
-        if(username =="" || password =="")  {
+        if(username ==="" || password ==="")  {
             setStatusMsg("Please enter your username and password!");
             return;
         }

@@ -31,7 +31,7 @@ const ForgetPassword = () => {
     return(
         <div className="row">
             <div className="col-md-4 offset-md-4">
-                {resMsg !="" ? <div className="alert alert-success" role="alert">{resMsg}</div> : ""}
+                {resMsg !== "" ? <div className="alert alert-success" role="alert">{resMsg}</div> : ""}
                 <div className="card mt-5">
                     <h3 className="card-header">Forgot Password</h3>
                     <div className="card-body">

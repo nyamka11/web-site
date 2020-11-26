@@ -1,9 +1,8 @@
 
-import  React, { useState  } from 'react';
+import  React from 'react';
 import { Breadcrumb } from 'react-bootstrap';
 import  Navbar  from '../components/common/Navbar.js';
 import  Footer  from '../components/common/Footer.js';
-import { BrowserRouter as Redirect } from 'react-router-dom';
 
 const About = () => {
     return (

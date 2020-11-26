@@ -33,9 +33,9 @@ const UsersComponent = () => {
     const actionFormat = (cell, row) => {
         return (
           <div>
-            <Link className={`btn btn-primary mr-2 ${row.level == "admin" || myID == row.id ? "disabled" : ""}`}  to={`/userscontrol/${row.id}`}>View</Link>
-            <Link className={`btn btn-info mr-2 ${row.level == "admin" || myID == row.id ? "disabled" : ""}`} to={`/userscontrol/edit/${row.id}`}>Edit</Link>
-            <button className={`btn btn-danger mr-2 ${row.level == "admin" || myID == row.id ? "disabled" : ""}`} onClick={() => deleteUser(row.id)}>Delete</button>
+            <Link className={`btn btn-primary mr-2 ${row.level === "admin" || myID === row.id ? "disabled" : ""}`}  to={`/userscontrol/${row.id}`}>View</Link>
+            <Link className={`btn btn-info mr-2 ${row.level === "admin" || myID === row.id ? "disabled" : ""}`} to={`/userscontrol/edit/${row.id}`}>Edit</Link>
+            <button className={`btn btn-danger mr-2 ${row.level === "admin" || myID === row.id ? "disabled" : ""}`} onClick={() => deleteUser(row.id)}>Delete</button>
           </div>
         );
     };

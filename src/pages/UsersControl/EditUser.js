@@ -30,11 +30,11 @@ const EditUser = () => {
   const onSubmit = async e => {
     e.preventDefault();
     let data = await axios.put(`${Constants.backEndURL}/Users/edit/${id}`, user);
-    if(data.data.res.status == 0)  {
+    if(data.data.res.status === 0)  {
       setMsg(data.data.res.msg);
     }
 
-    if(data.data.res.status == 1)  {
+    if(data.data.res.status === 1)  {
       setMsg(data.data.res.msg);
       history.push("/userscontrol");
     }
@@ -61,7 +61,7 @@ const EditUser = () => {
         {loader ? loaderHTML() : 
           <div className="w-75 mx-auto shadow p-5">
             <h2 className="text-center mb-4">Edit A User</h2>
-            { msg !="" ? <div className="alert alert-danger" role="alert">{msg}</div> : "" }
+            { msg !== "" ? <div className="alert alert-danger" role="alert">{msg}</div> : "" }
             <form onSubmit={e => onSubmit(e)}>
               <div className="form-group">
                 <input
